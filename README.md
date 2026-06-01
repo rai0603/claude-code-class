@@ -1,8 +1,8 @@
-# Claude Code 實戰課程
+# 全世界最夯的 AI 工具 — 運用 Claude 工作流，邁入 AI 進化之路
 
 招生 landing page — 半日展示班 × 一日上線班，by Rai。
 
-從 AI 工作流導入到實戰上線，由水行者運動與多個 SaaS 產品創辦人 Rai 親授。
+Claude 是 2026 年全世界最夯的 AI 工具。運用 Claude 工作流，從入門到實戰上線，邁入你的 AI 進化之路。由水行者運動與多個 SaaS 產品創辦人 Rai 親授。
 
 ## 線上瀏覽
 
