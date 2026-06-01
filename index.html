@@ -280,6 +280,10 @@ section:first-of-type{border-top:0}
   letter-spacing:.04em;margin-top:8px;font-weight:500;
 }
 .deliv .out::before{content:"→ 產出  ";color:var(--muted)}
+.deliv-demo{display:block;margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid #e3d9fb;text-decoration:none;transition:transform .25s,box-shadow .25s,border-color .25s}
+.deliv-demo:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#c9b8fb}
+.deliv-demo img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;display:block}
+.deliv-demo .cta{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.04em;color:#fff;background:var(--primary)}
 
 /* Stack section */
 .stack-wrap{
@@ -557,8 +561,10 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
 
       <div class="showcase">
         <figure class="shot">
-          <div class="shot-bar"><i></i><i></i><i></i><span>形象網站</span></div>
-          <div class="shot-img"><img src="assets/demo-website.jpg" alt="形象網站範例 — 室內設計品牌官網" loading="lazy" /></div>
+          <a href="demos/muhe.html" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit">
+            <div class="shot-bar"><i></i><i></i><i></i><span>形象網站 · 點擊看真實成品 ↗</span></div>
+            <div class="shot-img"><img src="assets/demo-muhe.jpg" alt="形象網站範例 — 沐禾 MUHE 室內設計品牌官網" loading="lazy" /></div>
+          </a>
         </figure>
         <figure class="shot">
           <div class="shot-bar"><i></i><i></i><i></i><span>每日簡報</span></div>
@@ -773,6 +779,10 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
           幫我做<em>室內設計品牌</em>的形象官網，溫潤留白風，要有作品、服務、線上諮詢。
         </div>
         <div class="out">完整形象官網 · 響應式 · 可綁自己網域</div>
+        <a class="deliv-demo" href="demos/muhe.html" target="_blank" rel="noopener">
+          <img src="assets/demo-muhe.jpg" alt="沐禾 MUHE 室內設計品牌官網 — 點擊看真實成品" loading="lazy" />
+          <span class="cta">▶ 點我開啟真實成品 · 沐禾 MUHE 官網</span>
+        </a>
       </div>
 
       <div class="deliv">
