@@ -112,7 +112,7 @@ section:first-of-type{border-top:0}
   padding:80px 0 70px;
   border-top:0;
 }
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 @media (max-width:880px){.hero-grid{grid-template-columns:1fr;gap:32px}}
 
 .hero h1{margin-bottom:28px}
@@ -124,27 +124,25 @@ section:first-of-type{border-top:0}
 }
 .hero .meta-bar span strong{color:var(--ink);font-weight:700}
 
-.hero-terminal{
-  background:#1c1838;border:1px solid #2e2856;
-  border-radius:16px;
-  font-family:var(--mono);font-size:13px;line-height:1.7;
-  overflow:hidden;box-shadow:var(--shadow);
+/* Hero showcase — 四大應用縮圖牆 */
+.showcase{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.shot{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;box-shadow:var(--shadow-sm);
+  transition:transform .18s,box-shadow .18s;
 }
-.hero-terminal .term-head{
+.shot:hover{transform:translateY(-4px);box-shadow:0 24px 46px -20px rgba(76,46,170,.38)}
+.shot-bar{
   display:flex;align-items:center;gap:6px;
-  padding:11px 14px;border-bottom:1px solid #2e2856;
-  background:#15122b;
+  padding:9px 13px;background:#f3eefc;border-bottom:1px solid var(--line);
 }
-.hero-terminal .term-head i{width:11px;height:11px;border-radius:50%;background:#444;display:inline-block}
-.hero-terminal .term-head i:nth-child(1){background:#ff5f57}
-.hero-terminal .term-head i:nth-child(2){background:#febc2e}
-.hero-terminal .term-head i:nth-child(3){background:#28c840}
-.hero-terminal .term-head span{margin-left:12px;color:#8a83b8;font-size:11px}
-.hero-terminal .term-body{padding:22px 20px}
-.hero-terminal .term-body p{margin-bottom:8px;color:#b9b2e0}
-.hero-terminal .prompt{color:#8b7bff}
-.hero-terminal .cmt{color:#6f6a9b}
-.hero-terminal .cursor{display:inline-block;width:8px;height:14px;background:#8b7bff;vertical-align:middle}
+.shot-bar i{width:9px;height:9px;border-radius:50%;background:#d9cef0;display:inline-block}
+.shot-bar i:nth-child(1){background:#ff5f57}
+.shot-bar i:nth-child(2){background:#febc2e}
+.shot-bar i:nth-child(3){background:#28c840}
+.shot-bar span{margin-left:8px;font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--primary);font-weight:500}
+.shot-img{aspect-ratio:16/10;background:#0e0b1e;overflow:hidden}
+.shot-img img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 
 /* === Two-course overview === */
 .compare{
@@ -524,23 +522,23 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
         </div>
       </div>
 
-      <div class="hero-terminal">
-        <div class="term-head">
-          <i></i><i></i><i></i>
-          <span>~/rai/claude-code-class</span>
-        </div>
-        <div class="term-body">
-          <p class="cmt"># 你的同學昨天做出來的：</p>
-          <p><span class="prompt">$</span> claude build "產業競品分析儀表板"</p>
-          <p class="cmt">  ✓ Next.js + Supabase + Recharts</p>
-          <p class="cmt">  ✓ 部署到 Zeabur，已綁定網址</p>
-          <p>&nbsp;</p>
-          <p><span class="prompt">$</span> claude build "活動報名小遊戲"</p>
-          <p class="cmt">  ✓ 含 OAuth 登入、排行榜</p>
-          <p class="cmt">  ✓ 上線時間：4 小時 22 分</p>
-          <p>&nbsp;</p>
-          <p><span class="prompt">$</span> _ <span class="cursor"></span></p>
-        </div>
+      <div class="showcase">
+        <figure class="shot">
+          <div class="shot-bar"><i></i><i></i><i></i><span>形象網站</span></div>
+          <div class="shot-img"><img src="assets/demo-website.jpg" alt="形象網站範例 — 室內設計品牌官網" loading="lazy" /></div>
+        </figure>
+        <figure class="shot">
+          <div class="shot-bar"><i></i><i></i><i></i><span>每日簡報</span></div>
+          <div class="shot-img"><img src="assets/demo-digest.png" alt="每日簡報範例 — AI 課程／新聞自動情報頁" loading="lazy" /></div>
+        </figure>
+        <figure class="shot">
+          <div class="shot-bar"><i></i><i></i><i></i><span>資料分析儀表板</span></div>
+          <div class="shot-img"><img src="assets/demo-dashboard.png" alt="資料分析儀表板範例 — 營運趨勢視覺化" loading="lazy" /></div>
+        </figure>
+        <figure class="shot">
+          <div class="shot-bar"><i></i><i></i><i></i><span>小遊戲</span></div>
+          <div class="shot-img"><img src="assets/demo-game.png" alt="小遊戲範例 — 像素動作遊戲" loading="lazy" /></div>
+        </figure>
       </div>
     </div>
   </div>
@@ -562,7 +560,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
         <ul>
           <li>Claude vs ChatGPT / Gemini / Cursor 全比較</li>
           <li>能力邊界（資料 / 抓取 / 對話 / 產出 4 維）</li>
-          <li>八大應用 demo + 現場 0→1 原型實作</li>
+          <li>四大應用 demo + 現場 0→1 原型實作</li>
           <li>保證金現場報到 100% 退還</li>
         </ul>
         <a href="#signup" class="btn">立即報名 →</a>
@@ -632,8 +630,8 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
       </div>
       <div class="deliv">
         <div class="ic">PART 3 · 90 MIN</div>
-        <h4>③ 八個用講的<br/>生出來的東西</h4>
-        <p>網站、研究分析、小工具、小遊戲、教學動畫、影音腳本、SaaS、外掛——看 Claude Code 用對話做完。</p>
+        <h4>③ 四大應用<br/>用講的就生出來</h4>
+        <p>形象網站、每日簡報、資料分析儀表板、小遊戲——看 Claude 用對話一個個做完。</p>
       </div>
       <div class="deliv">
         <div class="ic">PART 4 · 30 MIN</div>
@@ -724,113 +722,69 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
 
     <div class="notice" style="margin-top:24px">
       <div class="label">休息 · 10 MIN</div>
-      <p>咖啡時間，可以走出來透氣或私下問我。Part 3 的八個 demo 接連登場。</p>
+      <p>咖啡時間，可以走出來透氣或私下問我。Part 3 的四大應用 demo 接連登場。</p>
     </div>
 
     <!-- ===== Part 3 ===== -->
     <div class="kicker" style="margin-top:72px">PART 3 · 90 MIN</div>
-    <h3 class="h-card" style="margin-bottom:8px">八個「居然這樣就做出來了」</h3>
-    <p class="lead" style="margin-bottom:24px">這段不是教你「怎麼做」。是讓你看<strong style="color:var(--cream)">「用講的就能做出來」是什麼意思</strong>。<br/>我會把 Claude Code 的對話過程攤開來——你只會看到我打字、它做事、東西生出來。沒有 stackoverflow，沒有翻教學，沒有寫 code。</p>
+    <h3 class="h-card" style="margin-bottom:8px">四大應用：用講的就生出來</h3>
+    <p class="lead" style="margin-bottom:24px">這段不是教你「怎麼做」。是讓你看<strong style="color:var(--cream)">「用講的就能做出來」是什麼意思</strong>。<br/>形象網站、每日簡報、資料分析儀表板、小遊戲——我會把 Claude 的對話過程攤開來，你只會看到我打字、它做事、東西生出來。沒有 stackoverflow，沒有翻教學，沒有寫 code。</p>
 
     <div class="deliv-grid">
       <div class="deliv">
-        <div class="ic">DEMO 01 · 10 MIN</div>
-        <h4>網站架構</h4>
-        <p>我什麼前端框架都沒提，只描述一家店、一個願景。剩下的它全部自己決定——結構、配色、字型、文案。</p>
+        <div class="ic">應用 01 · 形象網站 · 22 MIN</div>
+        <h4>形象網站</h4>
+        <p>我什麼前端框架都沒提，只描述一個品牌、一種氣質。結構、配色、字型、文案、響應式它全部自己決定。</p>
         <div class="say">
           <div class="you">你只說</div>
-          幫我做<em>賣手作甜點</em>的單頁網站，用日式溫暖風格。
+          幫我做<em>室內設計品牌</em>的形象官網，溫潤留白風，要有作品、服務、線上諮詢。
         </div>
-        <div class="out">完整 landing page · 含表單 · 可上線</div>
+        <div class="out">完整形象官網 · 響應式 · 可綁自己網域</div>
       </div>
 
       <div class="deliv">
-        <div class="ic">DEMO 02 · 12 MIN</div>
-        <h4>產業分析報告</h4>
-        <p>沒有打開任何瀏覽器、沒有手動複製貼上。Claude Code 自己去爬資料、整理、產表、寫結論。</p>
+        <div class="ic">應用 02 · 每日簡報 · 22 MIN</div>
+        <h4>每日簡報</h4>
+        <p>沒有打開任何瀏覽器、沒有手動複製貼上。Claude 自己去爬資料、分類、整理，產出一頁可分享、會自動更新的情報簡報。</p>
         <div class="say">
           <div class="you">你只說</div>
-          幫我研究<em>台灣電動車充電站</em>市場，找 30 家業者，分析優劣勢，做成 PDF。
+          每天自動幫我蒐集<em>台灣 AI 課程與新聞</em>，分類整理成一頁可分享的情報簡報。
         </div>
-        <div class="out">10 頁 PDF · 含 SWOT · 含 source URL</div>
+        <div class="out">自動更新情報頁 · 多分類 · 一鍵分享連結</div>
       </div>
 
       <div class="deliv">
-        <div class="ic">DEMO 03 · 10 MIN</div>
-        <h4>小工具網站</h4>
-        <p>我沒寫一行 JavaScript。它自己決定要用什麼演算法做公平的抽籤，並把結果上傳到雲端。</p>
+        <div class="ic">應用 03 · 資料分析儀表板 · 24 MIN</div>
+        <h4>資料分析儀表板</h4>
+        <p>把一份雜亂的 Excel 丟進去，它自己判斷該畫什麼圖、怎麼分組，產出可互動的視覺化儀表板。研究、報告、提案都能用。</p>
         <div class="say">
           <div class="you">你只說</div>
-          做一個<em>活動抽籤工具</em>，可以匯入 CSV 名單、按下按鈕抽出中獎者、結果存雲端。
+          把我這份<em>營運 Excel</em> 做成互動儀表板：年度趨勢、客戶來源占比、各年比較。
         </div>
-        <div class="out">可上線網頁 · 含 CSV import · 含結果分享連結</div>
+        <div class="out">互動 dashboard · 多圖表 · 可上線分享</div>
       </div>
 
       <div class="deliv">
-        <div class="ic">DEMO 04 · 12 MIN</div>
-        <h4>能玩的小遊戲</h4>
-        <p>連分數計算、難度遞增、排行榜資料庫，它都自己處理完。下課前你拿手機掃 QR 就能玩。</p>
+        <div class="ic">應用 04 · 小遊戲 · 22 MIN</div>
+        <h4>小遊戲</h4>
+        <p>連分數、關卡、武器升級、血量能量、排行榜資料庫，它都自己處理完。下課前你拿手機掃 QR 就能玩。</p>
         <div class="say">
           <div class="you">你只說</div>
-          做一個<em>類似 Wordle 但用台灣地名</em>的猜謎遊戲，要有排行榜。
+          做一個<em>橫向動作小遊戲</em>，可升級武器、有血量能量條，手機也能玩、有排行榜。
         </div>
-        <div class="out">完整 web game · 含資料庫 · 含分享功能</div>
-      </div>
-
-      <div class="deliv">
-        <div class="ic">DEMO 05 · 10 MIN</div>
-        <h4>教學互動動畫</h4>
-        <p>不是影片、不是 PPT。是學生可以拖動參數、即時看結果變化的網頁動畫。物理、財經、生物都能做。</p>
-        <div class="say">
-          <div class="you">你只說</div>
-          做一個<em>複利計算的互動動畫</em>，可以拖動本金、利率、年數，看到曲線變化。
-        </div>
-        <div class="out">互動式 SVG 動畫 · 嵌入網站直接用</div>
-      </div>
-
-      <div class="deliv">
-        <div class="ic">DEMO 06 · 5 MIN</div>
-        <h4>貼文 / 影片腳本 <span style="font-size:11px;color:var(--mute)">（簡略帶過）</span></h4>
-        <p>影片生成這塊 Sora、Veo、Runway 比 Claude 強。Claude 的角色是<strong style="color:var(--cream)">總導演</strong>——產腳本、寫分鏡、生 prompt 給其他工具用。</p>
-        <div class="say">
-          <div class="you">你只說</div>
-          幫我寫 7 天<em>水域運動 IG Reels 腳本</em>，每天一個主題，順便生 Sora prompt。
-        </div>
-        <div class="out">7 份腳本 · 7 組 Sora prompt · 可直接餵</div>
-      </div>
-
-      <div class="deliv">
-        <div class="ic">DEMO 07 · 18 MIN</div>
-        <h4>完整 SaaS 平台</h4>
-        <p>最炸的一段。一個有付費功能的網路服務，從零到能收信用卡，整個過程你只是在<strong style="color:var(--cream)">講話</strong>。以我的 CitableRank 當案例拆解。</p>
-        <div class="say">
-          <div class="you">你只說</div>
-          做一個<em>追蹤品牌在 AI 搜尋裡被引用</em>的工具，要登入、要付月費、要後台。
-        </div>
-        <div class="out">前後端 + 資料庫 + 金流 + 部署 · 含網域</div>
-      </div>
-
-      <div class="deliv">
-        <div class="ic">DEMO 08 · 13 MIN</div>
-        <h4>網站外掛 / Plugin</h4>
-        <p>已經有 WordPress、Shopify、Chrome 的人——你不需要砍掉重來。Claude 可以幫你<strong style="color:var(--cream)">在既有系統上加功能</strong>。</p>
-        <div class="say">
-          <div class="you">你只說</div>
-          幫我寫一個<em>WordPress 外掛</em>，自動幫每篇文章加 FAQ Schema，讓 Google 認得。
-        </div>
-        <div class="out">.zip 外掛檔 · 後台可調 · 含安裝說明</div>
+        <div class="out">完整 web game · 含關卡與排行榜 · 掃 QR 即玩</div>
       </div>
     </div>
 
     <div class="notice" style="margin-top:24px">
-      <div class="label">休息 · 10 MIN（穿插在 Demo 4 與 Demo 5 之間）</div>
-      <p>連續看 8 個 demo 中間會塞一次休息，避免訊息量過載。中場時可以提問或補拍照。</p>
+      <div class="label">休息 · 10 MIN（穿插在第 2、3 個應用之間）</div>
+      <p>四段應用 demo 中間會塞一次休息，避免訊息量過載。中場時可以提問或補拍照。</p>
     </div>
 
     <!-- ===== Part 4 ===== -->
     <div class="kicker" style="margin-top:72px">PART 4 · 30 MIN</div>
     <h3 class="h-card" style="margin-bottom:8px">換你出題｜看 Claude 即時做給你看</h3>
-    <p class="lead" style="margin-bottom:24px">前面八個是<strong style="color:var(--cream)">我準備好的題目</strong>，這一段換你們出。<br/>我不會教步驟、不會講原理，<strong style="color:var(--cream)">就是當著你的面打字給 Claude</strong>，東西就生出來了。10 分鐘一個，連做三輪。</p>
+    <p class="lead" style="margin-bottom:24px">前面四個是<strong style="color:var(--cream)">我準備好的題目</strong>，這一段換你們出。<br/>我不會教步驟、不會講原理，<strong style="color:var(--cream)">就是當著你的面打字給 Claude</strong>，東西就生出來了。10 分鐘一個，連做三輪。</p>
 
     <div class="schedule">
       <div class="row">
@@ -906,7 +860,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
   <div class="wrap">
     <div class="kicker">立即報名 · 宜蘭蘇澳專場</div>
     <h2 class="h-section">半日展示班 · <em>首批限額 20 人</em></h2>
-    <p class="lead" style="margin-top:14px">不寫程式也能變身 AI 高手——零基礎可上手、8 大應用現場 Demo、離場帶走一份 AI 應用地圖。線上填表 + 預收 NT$100 保證金即完成報名，<strong style="color:var(--ink)">現場報到後全額退還</strong>。</p>
+    <p class="lead" style="margin-top:14px">不寫程式也能變身 AI 高手——零基礎可上手、四大應用現場 Demo、離場帶走一份 AI 應用地圖。線上填表 + 預收 NT$100 保證金即完成報名，<strong style="color:var(--ink)">現場報到後全額退還</strong>。</p>
 
     <div class="signup-grid">
       <!-- 左：活動資訊 -->
@@ -918,7 +872,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
         <div class="ev-row"><div class="k">費用</div><div class="v">預收保證金 <strong>NT$100</strong><small>現場報到後 100% 退還，純為確保到場</small></div></div>
         <ul class="ev-points">
           <li>零基礎也能上手的 AI 革命</li>
-          <li>8 大應用現場即時 Demo</li>
+          <li>四大應用現場即時 Demo</li>
           <li>帶走一份 AI 應用地圖</li>
         </ul>
       </div>
