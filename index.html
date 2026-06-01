@@ -495,6 +495,8 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
   color:var(--primary);background:#fff;border:1.5px solid #d9cefb;border-radius:999px;padding:6px 14px;transition:all .15s;
 }
 .bank-row .copy:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.reg-done .line-btn{width:100%;justify-content:center;margin-top:16px;background:#06c755;color:#fff;box-shadow:0 12px 24px -10px rgba(6,199,85,.55)}
+.reg-done .line-btn:hover{filter:brightness(1.05);color:#fff}
 
 /* === Classroom === */
 .room-photo{
@@ -886,6 +888,64 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
   </div>
 </section>
 
+<!-- ============ INSTRUCTOR（講者介紹）============ -->
+<section id="instructor">
+  <div class="wrap">
+    <div class="kicker">講者介紹</div>
+    <h2 class="h-section" style="margin-bottom:44px">為什麼是<em> Rai </em>來教？</h2>
+
+    <div class="instructor">
+      <div class="inst-card">
+        <div class="inst-photo"><img src="assets/rai-portrait.jpg" alt="講者 陳建文 Rai 形象照" loading="lazy" /></div>
+        <h3>陳建文 Rai</h3>
+        <div class="role">水行者運動國際有限公司 負責人</div>
+        <div class="role-sub">Claude 工作流實戰應用營 推廣講師</div>
+        <div class="role-sub">風箏衝浪資深教練 · 立槳 SUP 推廣總教練</div>
+        <div class="creds">
+          <div>連續創業者 · 多個 SaaS 產品創辦人</div>
+          <div>IKO Level 2 國際風箏衝浪教練</div>
+          <div>2012 KTA 風箏衝浪亞巡賽 · 平潭站</div>
+          <div>立槳 SUP 帶團累計 35,000 人次</div>
+          <div>多次帶團挑戰秀姑巒溪 SUP 溯溪</div>
+          <div>2025 國家搜救有功人員</div>
+          <div>三立新聞等媒體專訪</div>
+        </div>
+      </div>
+
+      <div class="inst-body">
+        <p>
+          坦白說，我不是學院派的工程師講師。我是<strong>水行者運動國際的負責人</strong>、是好幾個 SaaS 產品（<strong>CitableRank、AICMS、DiDiPo、AI 妹嘻</strong>）的連續創業者，更是一個在海上教了十多年風箏衝浪、立槳 SUP 帶團累計超過<strong>三萬五千人次</strong>的極限運動教練。
+        </p>
+        <p>
+          從教人站上浪板，到教人用 AI 把想法變成產品——我做的一直是同一件事：<strong>把複雜的東西，拆成你今天就能上手的步驟</strong>。所以我的 AI 課跟別人不一樣，我不教理論，我分享我每天都在用的工作流。
+        </p>
+        <div class="quote">「先有證據，才能動手」——這是我 Claude 工作流的核心，也是這堂課從頭到尾的精神。</div>
+        <p>
+          2026 年 3 月，我用一個月、以零手寫程式碼上線了 4 個產品。這不是炫耀，是想說明一件事：<strong>AI 開發的瓶頸不是會不會寫 code，是會不會描述問題、會不會驗證結果、會不會 ship</strong>。
+        </p>
+        <p>
+          這堂課我把這套方法 1:1 教給你，不藏私，全程用我自己的真實業務（水行者預約系統、CitableRank 後台、賽事報名系統）當案例。海上帶團累積的耐心，加上連續創業踩過的坑，就是你最需要的那種「聽得懂、也做得出來」的老師。
+        </p>
+      </div>
+    </div>
+
+    <div class="inst-gallery">
+      <figure>
+        <img src="assets/rai-kite.jpg" alt="陳建文 Rai 風箏衝浪" loading="lazy" />
+        <figcaption>風箏衝浪 · IKO Level 2 教練｜2012 KTA 亞巡賽平潭站</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/rai-sup.jpg" alt="帶團挑戰秀姑巒溪 SUP 溯溪" loading="lazy" />
+        <figcaption>多次帶團挑戰秀姑巒溪 SUP 溯溪</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/rai-news.jpg" alt="三立新聞專訪 SUP 立槳教練 陳建文" loading="lazy" />
+        <figcaption>三立新聞專訪 · SUP 立槳教練</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CLASSROOM（無敵海景教室）============ -->
 <section id="classroom">
   <div class="wrap">
@@ -952,15 +1012,17 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
         <!-- 成功畫面（預設隱藏）-->
         <div class="reg-done" id="regDone" hidden>
           <div class="done-badge">✓ 報名已送出</div>
-          <h3>最後一步：完成 NT$100 保證金匯款</h3>
-          <p>請於 <strong>3 日內</strong>匯款 NT$100 以保留名額；<strong>現場報到後全額退還</strong>。匯款後可 LINE 告知末五碼加速核對。</p>
+          <h3>最後兩步：匯款 → LINE 回報末五碼</h3>
+          <p><strong>① 匯款</strong>：請於 <strong>3 日內</strong>匯款 NT$100 保證金（<strong>現場報到後全額退還</strong>）。</p>
           <div class="bank">
             <div class="bank-row"><span>銀行</span><b>台灣銀行（004）</b></div>
             <div class="bank-row"><span>帳號</span><b id="bankAcct">089004186688</b><button type="button" class="copy" data-copy="089004186688">複製</button></div>
             <div class="bank-row"><span>戶名</span><b>陳建文</b></div>
             <div class="bank-row"><span>金額</span><b>NT$100</b></div>
           </div>
-          <p class="small" style="margin-top:14px">完成匯款後我們會以 Email / 電話跟你確認。任何問題請洽 LINE：@waterman</p>
+          <p style="margin-top:14px"><strong>② 加 LINE 回報</strong>：到我們的官方 LINE 告知<strong>匯款帳號末五碼</strong>，核對後即完成報名與報到確認。</p>
+          <a class="btn line-btn" href="https://line.me/R/ti/p/@waterman" target="_blank" rel="noopener">加 LINE 回報末五碼 · @waterman →</a>
+          <p class="small" style="margin-top:14px">核對完成後我們會在 LINE / Email 跟你確認；任何問題也歡迎直接在 LINE 詢問。</p>
         </div>
       </div>
     </div>
@@ -1278,64 +1340,6 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
   </div>
 </section>
 
-<!-- ============ INSTRUCTOR ============ -->
-<section id="instructor">
-  <div class="wrap">
-    <div class="kicker">講者介紹</div>
-    <h2 class="h-section" style="margin-bottom:44px">為什麼是<em> Rai </em>來教？</h2>
-
-    <div class="instructor">
-      <div class="inst-card">
-        <div class="inst-photo"><img src="assets/rai-portrait.jpg" alt="講者 陳建文 Rai 形象照" loading="lazy" /></div>
-        <h3>陳建文 Rai</h3>
-        <div class="role">水行者運動國際有限公司 負責人</div>
-        <div class="role-sub">Claude 工作流實戰應用營 推廣講師</div>
-        <div class="role-sub">風箏衝浪資深教練 · 立槳 SUP 推廣總教練</div>
-        <div class="creds">
-          <div>連續創業者 · 多個 SaaS 產品創辦人</div>
-          <div>IKO Level 2 國際風箏衝浪教練</div>
-          <div>2012 KTA 風箏衝浪亞巡賽 · 平潭站</div>
-          <div>立槳 SUP 帶團累計 35,000 人次</div>
-          <div>多次帶團挑戰秀姑巒溪 SUP 溯溪</div>
-          <div>2025 國家搜救有功人員</div>
-          <div>三立新聞等媒體專訪</div>
-        </div>
-      </div>
-
-      <div class="inst-body">
-        <p>
-          坦白說，我不是學院派的工程師講師。我是<strong>水行者運動國際的負責人</strong>、是好幾個 SaaS 產品（<strong>CitableRank、AICMS、DiDiPo、AI 妹嘻</strong>）的連續創業者，更是一個在海上教了十多年風箏衝浪、立槳 SUP 帶團累計超過<strong>三萬五千人次</strong>的極限運動教練。
-        </p>
-        <p>
-          從教人站上浪板，到教人用 AI 把想法變成產品——我做的一直是同一件事：<strong>把複雜的東西，拆成你今天就能上手的步驟</strong>。所以我的 AI 課跟別人不一樣，我不教理論，我分享我每天都在用的工作流。
-        </p>
-        <div class="quote">「先有證據，才能動手」——這是我 Claude 工作流的核心，也是這堂課從頭到尾的精神。</div>
-        <p>
-          2026 年 3 月，我用一個月、以零手寫程式碼上線了 4 個產品。這不是炫耀，是想說明一件事：<strong>AI 開發的瓶頸不是會不會寫 code，是會不會描述問題、會不會驗證結果、會不會 ship</strong>。
-        </p>
-        <p>
-          這堂課我把這套方法 1:1 教給你，不藏私，全程用我自己的真實業務（水行者預約系統、CitableRank 後台、賽事報名系統）當案例。海上帶團累積的耐心，加上連續創業踩過的坑，就是你最需要的那種「聽得懂、也做得出來」的老師。
-        </p>
-      </div>
-    </div>
-
-    <div class="inst-gallery">
-      <figure>
-        <img src="assets/rai-kite.jpg" alt="陳建文 Rai 風箏衝浪" loading="lazy" />
-        <figcaption>風箏衝浪 · IKO Level 2 教練｜2012 KTA 亞巡賽平潭站</figcaption>
-      </figure>
-      <figure>
-        <img src="assets/rai-sup.jpg" alt="帶團挑戰秀姑巒溪 SUP 溯溪" loading="lazy" />
-        <figcaption>多次帶團挑戰秀姑巒溪 SUP 溯溪</figcaption>
-      </figure>
-      <figure>
-        <img src="assets/rai-news.jpg" alt="三立新聞專訪 SUP 立槳教練 陳建文" loading="lazy" />
-        <figcaption>三立新聞專訪 · SUP 立槳教練</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
 <!-- ============ FAQ ============ -->
 <section>
   <div class="wrap">
@@ -1389,7 +1393,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
       <a href="#signup" class="btn">報名半日展示班 · 保證金 NT$100 →</a>
       <a href="#course-2" class="btn btn-ghost">看一日上線班 →</a>
     </div>
-    <p class="small" style="margin-top:28px">或寫信給 Rai：rai@waterman.cc &nbsp;·&nbsp; LINE：@waterman</p>
+    <p class="small" style="margin-top:28px">或寫信給 Rai：<a href="mailto:rai@waterman.cc" style="color:#fff;text-decoration:underline">rai@waterman.cc</a> &nbsp;·&nbsp; LINE：<a href="https://line.me/R/ti/p/@waterman" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">@waterman</a></p>
   </div>
 </section>
 
