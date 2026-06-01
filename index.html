@@ -355,17 +355,24 @@ section:first-of-type{border-top:0}
   background:var(--surface);border:1px solid var(--line);border-radius:22px;
   padding:30px;box-shadow:var(--shadow);
 }
-.inst-card .avatar{
-  width:74px;height:74px;border-radius:50%;
-  background:var(--grad);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--sans);font-size:32px;font-weight:900;color:#fff;
-  margin-bottom:18px;box-shadow:0 10px 24px -10px rgba(109,77,246,.7);
+.inst-card .inst-photo{
+  border-radius:16px;overflow:hidden;margin-bottom:18px;
+  aspect-ratio:4/5;border:1px solid var(--line);box-shadow:var(--shadow-sm);background:#ece6f8;
 }
-.inst-card h3{font-family:var(--sans);font-size:26px;font-weight:800;margin-bottom:4px;color:var(--ink)}
-.inst-card .role{font-family:var(--mono);font-size:12px;color:var(--primary);letter-spacing:.05em;margin-bottom:18px;font-weight:500}
-.inst-card .creds{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--text);font-family:var(--mono)}
+.inst-card .inst-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.inst-card h3{font-family:var(--sans);font-size:26px;font-weight:800;margin-bottom:6px;color:var(--ink)}
+.inst-card .role{font-family:var(--sans);font-size:14.5px;color:var(--primary);font-weight:800;line-height:1.4}
+.inst-card .role-sub{font-family:var(--mono);font-size:11.5px;color:var(--text);letter-spacing:.01em;margin-top:4px;line-height:1.45}
+.inst-card .creds{display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:var(--text);font-family:var(--mono);margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
 .inst-card .creds div::before{content:"◆ ";color:var(--amber)}
+
+/* 講者照片牆 */
+.inst-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+@media (max-width:760px){.inst-gallery{grid-template-columns:1fr}}
+.inst-gallery figure{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .15s,box-shadow .15s}
+.inst-gallery figure:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.inst-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#0e0b1e}
+.inst-gallery figcaption{padding:13px 16px;font-size:13px;color:var(--text);font-weight:500;line-height:1.5}
 
 .inst-body p{margin-bottom:16px;font-size:16px;line-height:1.8;color:var(--text)}
 .inst-body p strong{color:var(--primary);font-weight:700}
@@ -1274,40 +1281,57 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
 <!-- ============ INSTRUCTOR ============ -->
 <section id="instructor">
   <div class="wrap">
-    <div class="kicker">講師</div>
+    <div class="kicker">講者介紹</div>
     <h2 class="h-section" style="margin-bottom:44px">為什麼是<em> Rai </em>來教？</h2>
 
     <div class="instructor">
       <div class="inst-card">
-        <div class="avatar">R</div>
+        <div class="inst-photo"><img src="assets/rai-portrait.jpg" alt="講者 陳建文 Rai 形象照" loading="lazy" /></div>
         <h3>陳建文 Rai</h3>
-        <div class="role">CONNECTOR · BUILDER · COACH</div>
+        <div class="role">水行者運動國際有限公司 負責人</div>
+        <div class="role-sub">Claude 工作流實戰應用營 推廣講師</div>
+        <div class="role-sub">風箏衝浪資深教練 · 立槳 SUP 推廣總教練</div>
         <div class="creds">
-          <div>水行者運動國際 創辦人（17 年）</div>
-          <div>TKWRA 創會理事</div>
-          <div>IKO Level 2 風箏衝浪教練</div>
-          <div>4 個 SaaS 產品同時開發中</div>
-          <div>前 iOS Engineer（Objective-C）</div>
-          <div>行政院救難表揚</div>
+          <div>連續創業者 · 多個 SaaS 產品創辦人</div>
+          <div>IKO Level 2 國際風箏衝浪教練</div>
+          <div>2012 KTA 風箏衝浪亞巡賽 · 平潭站</div>
+          <div>立槳 SUP 帶團累計 35,000 人次</div>
+          <div>多次帶團挑戰秀姑巒溪 SUP 溯溪</div>
+          <div>2025 國家搜救有功人員</div>
+          <div>三立新聞等媒體專訪</div>
         </div>
       </div>
 
       <div class="inst-body">
         <p>
-          坦白說，我不是學院派的工程師講師。我是個 17 年的水域運動教練、是 4 個 SaaS 產品（<strong>CitableRank、AICMS、DiDiPo、AI 妹嘻</strong>）的創辦人、也是台灣風箏衝浪賽事協會的理事。
+          坦白說，我不是學院派的工程師講師。我是<strong>水行者運動國際的負責人</strong>、是好幾個 SaaS 產品（<strong>CitableRank、AICMS、DiDiPo、AI 妹嘻</strong>）的連續創業者，更是一個在海上教了十多年風箏衝浪、立槳 SUP 帶團累計超過<strong>三萬五千人次</strong>的極限運動教練。
         </p>
         <p>
-          但正因為這樣，我的 AI 開發課跟其他人不一樣——<strong>我不是教理論，我是分享我每天都在用的工作流</strong>。
+          從教人站上浪板，到教人用 AI 把想法變成產品——我做的一直是同一件事：<strong>把複雜的東西，拆成你今天就能上手的步驟</strong>。所以我的 AI 課跟別人不一樣，我不教理論，我分享我每天都在用的工作流。
         </p>
-        <div class="quote">「先有證據，才能動手」——這是我 Claude Code 工作流的核心，也是這堂課從頭到尾的精神。</div>
+        <div class="quote">「先有證據，才能動手」——這是我 Claude 工作流的核心，也是這堂課從頭到尾的精神。</div>
         <p>
-          2026 年的 3 月，我用一個月時間以零手寫程式碼上線了 4 個產品。這不是炫耀，是想說明一件事：
-          <strong>AI 開發的瓶頸不是會不會寫 code，是會不會描述問題、會不會驗證結果、會不會 ship</strong>。
+          2026 年 3 月，我用一個月、以零手寫程式碼上線了 4 個產品。這不是炫耀，是想說明一件事：<strong>AI 開發的瓶頸不是會不會寫 code，是會不會描述問題、會不會驗證結果、會不會 ship</strong>。
         </p>
         <p>
-          這堂課我會把這套方法 1:1 教給你，不藏私。用我自己的真實業務（水行者預約系統、CitableRank 後台、TKWRA 賽事報名）當案例。看完你就知道什麼是「先有證據才能動手」，以及為什麼這個原則能讓 AI 真的成為你的工程師。
+          這堂課我把這套方法 1:1 教給你，不藏私，全程用我自己的真實業務（水行者預約系統、CitableRank 後台、賽事報名系統）當案例。海上帶團累積的耐心，加上連續創業踩過的坑，就是你最需要的那種「聽得懂、也做得出來」的老師。
         </p>
       </div>
+    </div>
+
+    <div class="inst-gallery">
+      <figure>
+        <img src="assets/rai-kite.jpg" alt="陳建文 Rai 風箏衝浪" loading="lazy" />
+        <figcaption>風箏衝浪 · IKO Level 2 教練｜2012 KTA 亞巡賽平潭站</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/rai-sup.jpg" alt="帶團挑戰秀姑巒溪 SUP 溯溪" loading="lazy" />
+        <figcaption>多次帶團挑戰秀姑巒溪 SUP 溯溪</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/rai-news.jpg" alt="三立新聞專訪 SUP 立槳教練 陳建文" loading="lazy" />
+        <figcaption>三立新聞專訪 · SUP 立槳教練</figcaption>
+      </figure>
     </div>
   </div>
 </section>
