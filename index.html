@@ -433,6 +433,63 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
 }
 .notice p{font-size:14.5px;color:var(--text);line-height:1.75}
 .notice p strong{color:var(--ink);font-weight:700}
+
+/* === Signup === */
+.signup-grid{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:24px;margin-top:40px;align-items:start;
+}
+@media (max-width:880px){.signup-grid{grid-template-columns:1fr}}
+
+.signup-info,.signup-form{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;box-shadow:var(--shadow);padding:32px 30px;
+}
+.signup-form{border:1.5px solid #c9b8fb;box-shadow:0 24px 48px -20px rgba(109,77,246,.34)}
+
+.ev-row{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:15px 0;border-bottom:1px dashed var(--line);align-items:start}
+.ev-row:first-child{padding-top:0}
+.ev-row .k{font-family:var(--mono);font-size:12px;color:var(--primary);letter-spacing:.05em;font-weight:500;padding-top:3px}
+.ev-row .v{font-size:16px;color:var(--ink);font-weight:500;line-height:1.5}
+.ev-row .v small{display:block;font-size:12.5px;color:var(--muted);font-weight:400;margin-top:4px;font-family:var(--sans)}
+.ev-row .v strong{color:var(--primary);font-weight:800}
+.ev-points{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.ev-points li{font-size:14px;color:var(--text);padding-left:24px;position:relative}
+.ev-points li::before{content:"✓";position:absolute;left:0;color:var(--primary);font-weight:700}
+
+#regForm{display:flex;flex-direction:column;gap:16px}
+#regForm label{display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:700;color:var(--ink)}
+#regForm label small{font-weight:400;color:var(--muted);font-size:12px}
+#regForm label .req{color:#ef4444}
+#regForm input{
+  font-family:var(--sans);font-size:15px;color:var(--ink);
+  padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;
+  background:#faf9ff;transition:border-color .15s,box-shadow .15s;width:100%;
+}
+#regForm input::placeholder{color:#b6b2c8}
+#regForm input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(109,77,246,.14);background:#fff}
+#regForm .btn{align-self:stretch;justify-content:center;margin-top:4px}
+#regForm .btn[disabled]{opacity:.6;cursor:not-allowed;transform:none}
+.form-note{font-size:13.5px;line-height:1.6;color:var(--muted);min-height:1px;margin-top:-2px}
+.form-note.warn{color:#d2473a}
+.form-note.ok{color:#1a9d5a}
+
+.reg-done .done-badge{
+  display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.05em;font-weight:500;
+  color:#0f8a4d;background:#e7f8ee;border:1px solid #b7e9cd;padding:7px 14px;border-radius:999px;margin-bottom:16px;
+}
+.reg-done h3{font-family:var(--sans);font-weight:800;font-size:20px;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.reg-done > p{font-size:14.5px;color:var(--text);line-height:1.75}
+.reg-done > p strong{color:var(--ink);font-weight:700}
+.bank{margin-top:18px;background:#f6f3ff;border:1px solid #d9cefb;border-radius:14px;padding:8px 18px}
+.bank-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed #ddd2f7;font-size:15px}
+.bank-row:last-child{border-bottom:0}
+.bank-row span{width:44px;color:var(--muted);font-family:var(--mono);font-size:12px;flex:none}
+.bank-row b{color:var(--ink);font-weight:800;font-family:var(--mono);letter-spacing:.02em}
+.bank-row .copy{
+  margin-left:auto;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;
+  color:var(--primary);background:#fff;border:1.5px solid #d9cefb;border-radius:999px;padding:6px 14px;transition:all .15s;
+}
+.bank-row .copy:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 </style>
 </head>
 <body>
@@ -442,7 +499,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
   <nav>
     <a href="#course-1">半日班</a>
     <a href="#course-2">一日班</a>
-    <a href="#cta">報名</a>
+    <a href="#signup">報名</a>
   </nav>
 </div>
 
@@ -498,18 +555,18 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
 
     <div class="compare">
       <div class="compare-card">
-        <div class="tag">免費引流班</div>
+        <div class="tag">首批限額 20</div>
         <div class="kicker" style="margin:0;color:var(--mute)">COURSE 01</div>
         <h3 class="h-card">半日 · 實戰展示班</h3>
-        <div class="price">免費 <small>/ 3 小時</small></div>
+        <div class="price">NT$100 <small>/ 保證金 · 現場全退</small></div>
         <p style="font-size:15px;color:var(--cream-dim)">用最快的速度看懂 Claude 為什麼是 2026 年最夯的 AI Agent、它能做什麼、邊界在哪。</p>
         <ul>
           <li>Claude vs ChatGPT / Gemini / Cursor 全比較</li>
           <li>能力邊界（資料 / 抓取 / 對話 / 產出 4 維）</li>
           <li>八大應用 demo + 現場 0→1 原型實作</li>
-          <li>適合：完全沒寫過程式的人</li>
+          <li>保證金現場報到 100% 退還</li>
         </ul>
-        <a href="#course-1" class="btn btn-ghost">看課程細節 →</a>
+        <a href="#signup" class="btn">立即報名 →</a>
       </div>
 
       <div class="compare-card featured">
@@ -549,8 +606,8 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
 
         <div class="course-meta">
           <div class="item"><div class="label">時長</div><div class="val">3 小時</div></div>
-          <div class="item"><div class="label">人數</div><div class="val">12 人</div></div>
-          <div class="item"><div class="label">費用</div><div class="val">免費</div></div>
+          <div class="item"><div class="label">人數</div><div class="val">20 人</div></div>
+          <div class="item"><div class="label">費用</div><div class="val">保證金 100</div></div>
           <div class="item"><div class="label">形式</div><div class="val">實體展示</div></div>
           <div class="item"><div class="label">先備</div><div class="val">完全零基礎</div></div>
           <div class="item"><div class="label">直播</div><div class="val">全程錄影</div></div>
@@ -840,6 +897,65 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
         <div class="chip"><span>DEPLOY</span>Zeabur</div>
         <div class="chip"><span>DB</span>Supabase</div>
         <div class="chip"><span>CMS</span>WordPress</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIGNUP（半日班報名）============ -->
+<section id="signup" style="background:var(--ink-2)">
+  <div class="wrap">
+    <div class="kicker">立即報名 · 宜蘭蘇澳專場</div>
+    <h2 class="h-section">半日展示班 · <em>首批限額 20 人</em></h2>
+    <p class="lead" style="margin-top:14px">不寫程式也能變身 AI 高手——零基礎可上手、8 大應用現場 Demo、離場帶走一份 AI 應用地圖。線上填表 + 預收 NT$100 保證金即完成報名，<strong style="color:var(--ink)">現場報到後全額退還</strong>。</p>
+
+    <div class="signup-grid">
+      <!-- 左：活動資訊 -->
+      <div class="signup-info">
+        <div class="ev-row"><div class="k">日期</div><div class="v">2026 / 06 / 07（週日）</div></div>
+        <div class="ev-row"><div class="k">時間</div><div class="v">下午 13:30 – 16:30（3 小時）</div></div>
+        <div class="ev-row"><div class="k">地點</div><div class="v">宜蘭蘇澳 · 水行者風箏衝浪俱樂部<small>全台最美無敵海景教學中心 · 蘇澳鎮學府路</small></div></div>
+        <div class="ev-row"><div class="k">名額</div><div class="v">首批限額 20 人 · 剩餘 <strong id="seatsLeft">—</strong> 位</div></div>
+        <div class="ev-row"><div class="k">費用</div><div class="v">預收保證金 <strong>NT$100</strong><small>現場報到後 100% 退還，純為確保到場</small></div></div>
+        <ul class="ev-points">
+          <li>零基礎也能上手的 AI 革命</li>
+          <li>8 大應用現場即時 Demo</li>
+          <li>帶走一份 AI 應用地圖</li>
+        </ul>
+      </div>
+
+      <!-- 右：報名表單 -->
+      <div class="signup-form">
+        <form id="regForm" novalidate>
+          <label>姓名 <span class="req">*</span>
+            <input name="name" type="text" required autocomplete="name" placeholder="王小明" />
+          </label>
+          <label>手機 <span class="req">*</span>
+            <input name="phone" type="tel" required autocomplete="tel" placeholder="0912-345-678" />
+          </label>
+          <label>Email <span class="req">*</span>
+            <input name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+          </label>
+          <label>匯款帳號後五碼 <small>（選填，可匯款後再補）</small>
+            <input name="last5" type="text" inputmode="numeric" maxlength="5" placeholder="末五碼" />
+          </label>
+          <button class="btn" type="submit" id="regSubmit">送出報名 →</button>
+          <p class="form-note" id="formNote" role="status"></p>
+        </form>
+
+        <!-- 成功畫面（預設隱藏）-->
+        <div class="reg-done" id="regDone" hidden>
+          <div class="done-badge">✓ 報名已送出</div>
+          <h3>最後一步：完成 NT$100 保證金匯款</h3>
+          <p>請於 <strong>3 日內</strong>匯款 NT$100 以保留名額；<strong>現場報到後全額退還</strong>。匯款後可 LINE 告知末五碼加速核對。</p>
+          <div class="bank">
+            <div class="bank-row"><span>銀行</span><b>台灣銀行（004）</b></div>
+            <div class="bank-row"><span>帳號</span><b id="bankAcct">089004186688</b><button type="button" class="copy" data-copy="089004186688">複製</button></div>
+            <div class="bank-row"><span>戶名</span><b>陳建文</b></div>
+            <div class="bank-row"><span>金額</span><b>NT$100</b></div>
+          </div>
+          <p class="small" style="margin-top:14px">完成匯款後我們會以 Email / 電話跟你確認。任何問題請洽 LINE：@waterman</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1247,8 +1363,8 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
     <h2 class="h-section">準備好<em>真的開始</em>了嗎？</h2>
     <p class="lead">先用半日班看看是不是你的菜，再決定要不要花一天把它變成你能用一輩子的工作流。<br/>兩條路都好走。</p>
     <div class="actions">
-      <a href="#" class="btn">報名一日上線班 · NT$6,800 →</a>
-      <a href="#" class="btn btn-ghost">先參加免費半日班 →</a>
+      <a href="#signup" class="btn">報名半日展示班 · 保證金 NT$100 →</a>
+      <a href="#course-2" class="btn btn-ghost">看一日上線班 →</a>
     </div>
     <p class="small" style="margin-top:28px">或寫信給 Rai：rai@waterman.cc &nbsp;·&nbsp; LINE：@waterman</p>
   </div>
@@ -1262,6 +1378,93 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
     </div>
   </div>
 </footer>
+
+<!-- ============ 報名系統（Supabase）============ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  // DiDiPo Pro 專案（publishable key 為公開金鑰，可安全嵌入前端）
+  const SB_URL = 'https://nxjtndpfccmzbrvfxczw.supabase.co';
+  const SB_KEY = 'sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
+  const SESSION = '2026-06-07';
+
+  const $ = (id) => document.getElementById(id);
+  if (!window.supabase) return; // CDN 載入失敗時靜默降級
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+  function setNote(msg, kind){
+    const n = $('formNote'); if(!n) return;
+    n.textContent = msg || '';
+    n.className = 'form-note' + (kind ? ' ' + kind : '');
+  }
+
+  async function refreshSeats(){
+    try{
+      const { data, error } = await sb.rpc('get_class_seats', { p_session: SESSION });
+      if (error) throw error;
+      const left = Math.max(0, data.remaining|0);
+      $('seatsLeft').textContent = left;
+      if (!data.is_open || left <= 0){
+        $('seatsLeft').textContent = '0';
+        const btn = $('regSubmit');
+        if (btn){ btn.textContent = '名額已滿 · 填表候補 →'; }
+        setNote('首批 20 位已額滿，仍可送出資料候補，有空位我們會通知你。', 'warn');
+      }
+    }catch(e){
+      $('seatsLeft').textContent = '—'; // 後端 SQL 尚未建立或離線
+    }
+  }
+
+  const form = $('regForm');
+  if (form){
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = $('regSubmit');
+      const f = e.target;
+      const name  = f.name.value.trim();
+      const phone = f.phone.value.trim();
+      const email = f.email.value.trim();
+      if (!name || !phone || !email){ setNote('請完整填寫姓名 / 手機 / Email。', 'warn'); return; }
+      if (!/^\S+@\S+\.\S+$/.test(email)){ setNote('Email 格式看起來不太對，再檢查一下。', 'warn'); return; }
+
+      const orig = btn.textContent;
+      btn.disabled = true; btn.textContent = '送出中…'; setNote('');
+      try{
+        const { data, error } = await sb.rpc('register_for_class', {
+          p_name: name, p_phone: phone, p_email: email,
+          p_last5: f.last5.value.trim() || null, p_session: SESSION
+        });
+        if (error) throw error;
+        if (!data || !data.ok){
+          setNote((data && data.message) || '報名失敗，請稍後再試。', 'warn');
+          btn.disabled = false; btn.textContent = orig;
+          if (data && data.reason === 'full') refreshSeats();
+          return;
+        }
+        form.style.display = 'none';
+        $('regDone').hidden = false;
+        $('regDone').scrollIntoView({ behavior:'smooth', block:'center' });
+        refreshSeats();
+      }catch(err){
+        setNote('連線異常，請稍後再試，或直接 LINE 我們：@waterman。', 'warn');
+        btn.disabled = false; btn.textContent = orig;
+      }
+    });
+  }
+
+  // 複製按鈕（匯款帳號）
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('.copy'); if(!b) return;
+    const text = b.dataset.copy || '';
+    navigator.clipboard.writeText(text).then(() => {
+      const t = b.textContent; b.textContent = '已複製 ✓';
+      setTimeout(() => { b.textContent = t; }, 1500);
+    }).catch(() => {});
+  });
+
+  refreshSeats();
+})();
+</script>
 
 </body>
 </html>
