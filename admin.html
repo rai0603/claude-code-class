@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>報名後台 · Claude 半日展示班</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#f4f1fb; --surface:#fff; --ink:#1a1430; --text:#56506f; --muted:#8c88a6;
+  --line:#e9e3f5; --primary:#6d4df6; --primary-d:#5a36e8; --grad:linear-gradient(135deg,#7b5cff,#5b7cff);
+  --shadow:0 18px 40px -20px rgba(76,46,170,.30); --shadow-sm:0 8px 22px -12px rgba(76,46,170,.22);
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --sans:'Noto Sans TC',-apple-system,'PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:var(--sans);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(1100px 600px at 82% -12%,rgba(123,92,255,.14),transparent 60%),var(--bg);min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 20px 64px}
+
+/* login */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:40px 34px;width:100%;max-width:380px;text-align:center}
+.login h1{font-weight:900;font-size:26px;color:var(--ink);margin-bottom:6px}
+.login p{font-size:14px;color:var(--muted);margin-bottom:22px}
+.login input{width:100%;font-family:var(--sans);font-size:15px;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;background:#faf9ff;color:var(--ink);margin-bottom:14px}
+.login input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(109,77,246,.14)}
+.btn{font-family:var(--sans);font-weight:700;font-size:15px;border:0;border-radius:999px;background:var(--grad);color:#fff;padding:13px 24px;cursor:pointer;box-shadow:0 12px 24px -10px rgba(109,77,246,.6);transition:transform .15s,filter .15s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn.full{width:100%}
+.btn.ghost{background:#fff;color:var(--primary);border:1.5px solid #d9cefb;box-shadow:none}
+.msg{font-size:13px;margin-top:10px;min-height:18px}
+.msg.err{color:#d2473a}
+
+/* app header */
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+header h1{font-weight:900;font-size:26px;color:var(--ink)}
+header .sub{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:4px}
+header .actions{display:flex;gap:10px}
+header .actions button{font-family:var(--sans);font-weight:700;font-size:13px;border-radius:999px;padding:9px 16px;cursor:pointer;border:1.5px solid #d9cefb;background:#fff;color:var(--primary)}
+header .actions button:hover{background:#faf8ff}
+
+/* summary */
+.summary{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:22px}
+@media(max-width:760px){.summary{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:420px){.summary{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:16px 14px;text-align:center}
+.stat .n{font-weight:900;font-size:26px;color:var(--ink);line-height:1}
+.stat .l{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px}
+.stat.hl .n{color:var(--primary)}
+.stat.ok .n{color:#0f8a4d}
+
+/* table */
+.tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);font-size:14px;white-space:nowrap}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;background:#faf8ff;position:sticky;top:0}
+td{color:var(--ink)}
+tr:last-child td{border-bottom:0}
+td.name{font-weight:700}
+td .mono{font-family:var(--mono);font-size:13px;color:var(--text)}
+.status-sel{font-family:var(--sans);font-weight:700;font-size:13px;border-radius:999px;padding:7px 12px;border:1.5px solid var(--line);cursor:pointer;background:#fff}
+.status-sel[data-v="paid"]{color:#0f8a4d;border-color:#b7e9cd;background:#e7f8ee}
+.status-sel[data-v="pending"]{color:#b8772a;border-color:#ffd9b8;background:#fff4e9}
+.status-sel[data-v="checked_in"]{color:#2a5fb8;border-color:#bcd2f5;background:#eaf1ff}
+.status-sel[data-v="cancelled"]{color:#8a8696;border-color:#e1dcef;background:#f3f1f9}
+.empty{padding:48px 20px;text-align:center;color:var(--muted)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:11px 20px;border-radius:999px;box-shadow:var(--shadow);opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- 登入 -->
+<div class="login" id="login">
+  <div class="card">
+    <h1>報名後台 🔐</h1>
+    <p>Claude 半日展示班 · 請輸入管理密碼</p>
+    <input id="pw" type="password" placeholder="管理密碼" autocomplete="current-password" />
+    <button class="btn full" id="loginBtn">進入後台</button>
+    <p class="msg" id="loginMsg"></p>
+  </div>
+</div>
+
+<!-- 後台 -->
+<div class="wrap" id="app" hidden>
+  <header>
+    <div>
+      <h1>半日班報名後台</h1>
+      <div class="sub" id="sessionLabel">場次：2026/06/07（日）13:30–16:30</div>
+    </div>
+    <div class="actions">
+      <button id="refreshBtn">↻ 重新整理</button>
+      <button id="logoutBtn">登出</button>
+    </div>
+  </header>
+
+  <div class="summary" id="summary"></div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>報名時間</th><th>姓名</th><th>電話</th><th>Email</th><th>匯款末五碼</th><th>狀態（可改）</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="hint">
+    狀態說明：<b>待匯款</b> → <b>已收保證金（報名成功）</b> → <b>已報到</b>；改成「已取消」會釋放一個名額。<br/>
+    改動即時寫入資料庫，前台「剩餘名額」會跟著變（已取消不佔名額）。
+  </p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  const SB_URL = 'https://nxjtndpfccmzbrvfxczw.supabase.co';
+  const SB_KEY = 'sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
+  const SESSION = '2026-06-07';
+  const LS_KEY = 'cc_admin_token';
+  const STATUSES = [
+    ['pending','待匯款'],
+    ['paid','已收保證金（報名成功）'],
+    ['checked_in','已報到'],
+    ['cancelled','已取消'],
+  ];
+  const LABEL = Object.fromEntries(STATUSES);
+
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+  const $ = (id) => document.getElementById(id);
+  let token = localStorage.getItem(LS_KEY) || '';
+
+  function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function fmtTime(iso){ try{ const d=new Date(iso); const p=n=>String(n).padStart(2,'0'); return `${d.getMonth()+1}/${d.getDate()} ${p(d.getHours())}:${p(d.getMinutes())}`; }catch(e){ return iso; } }
+
+  async function load(){
+    const { data, error } = await sb.rpc('admin_list_registrations', { p_token: token, p_session: SESSION });
+    if (error){ return { ok:false, message:'連線異常，請稍後再試' }; }
+    return data;
+  }
+
+  function render(d){
+    const rows = d.rows || [];
+    const cap = d.capacity || 20;
+    const by = s => rows.filter(r=>r.status===s).length;
+    const paid=by('paid'), pend=by('pending'), chk=by('checked_in'), cancel=by('cancelled');
+    const active = rows.length - cancel;
+    const remain = Math.max(0, cap - active);
+
+    $('summary').innerHTML = [
+      ['總報名', rows.length, ''],
+      ['已收保證金', paid, 'ok'],
+      ['待匯款', pend, ''],
+      ['已報到', chk, ''],
+      ['已取消', cancel, ''],
+      ['剩餘名額', remain, 'hl'],
+    ].map(([l,n,c])=>`<div class="stat ${c}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+
+    if (!rows.length){
+      $('rows').innerHTML = `<tr><td colspan="6"><div class="empty">目前沒有報名資料</div></td></tr>`;
+      return;
+    }
+    $('rows').innerHTML = rows.map(r=>{
+      const opts = STATUSES.map(([v,l])=>`<option value="${v}" ${v===r.status?'selected':''}>${l}</option>`).join('');
+      return `<tr>
+        <td class="mono">${fmtTime(r.created_at)}</td>
+        <td class="name">${esc(r.name)}</td>
+        <td><span class="mono">${esc(r.phone)}</span></td>
+        <td>${esc(r.email)}</td>
+        <td><span class="mono">${esc(r.transfer_last5)||'—'}</span></td>
+        <td><select class="status-sel" data-v="${r.status}" data-id="${r.id}">${opts}</select></td>
+      </tr>`;
+    }).join('');
+
+    $('rows').querySelectorAll('.status-sel').forEach(sel=>{
+      sel.addEventListener('change', async (e)=>{
+        const id=e.target.dataset.id, status=e.target.value, prev=e.target.dataset.v;
+        e.target.disabled=true;
+        const { data, error } = await sb.rpc('admin_set_status', { p_token: token, p_id: id, p_status: status });
+        e.target.disabled=false;
+        if (error || !data || !data.ok){
+          toast((data&&data.message)||'更新失敗'); e.target.value=prev; return;
+        }
+        e.target.dataset.v=status;
+        toast('已更新為「'+LABEL[status]+'」');
+        refresh(); // 重新整理數字統計
+      });
+    });
+  }
+
+  async function refresh(){
+    const d = await load();
+    if (!d || !d.ok){
+      // 密碼錯或失效 → 回登入
+      localStorage.removeItem(LS_KEY); token='';
+      $('app').hidden=true; $('login').style.display='flex';
+      $('loginMsg').textContent = (d&&d.message) || '請重新登入';
+      $('loginMsg').className='msg err';
+      return;
+    }
+    render(d);
+  }
+
+  function enter(){
+    $('login').style.display='none';
+    $('app').hidden=false;
+    refresh();
+  }
+
+  $('loginBtn').addEventListener('click', async ()=>{
+    const pw = $('pw').value.trim();
+    if (!pw){ $('loginMsg').textContent='請輸入密碼'; $('loginMsg').className='msg err'; return; }
+    $('loginMsg').textContent='驗證中…'; $('loginMsg').className='msg';
+    token = pw;
+    const d = await load();
+    if (!d || !d.ok){
+      token=''; $('loginMsg').textContent=(d&&d.message)||'登入失敗'; $('loginMsg').className='msg err'; return;
+    }
+    localStorage.setItem(LS_KEY, pw);
+    enter();
+  });
+  $('pw').addEventListener('keydown', e=>{ if(e.key==='Enter') $('loginBtn').click(); });
+  $('refreshBtn').addEventListener('click', refresh);
+  $('logoutBtn').addEventListener('click', ()=>{ localStorage.removeItem(LS_KEY); location.reload(); });
+
+  // 已登入過 → 自動進入
+  if (token) enter();
+})();
+</script>
+</body>
+</html>
