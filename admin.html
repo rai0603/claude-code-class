@@ -4,233 +4,281 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
-<title>報名後台 · Claude 半日展示班</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
+<title>報名後台 · Claude 課程（半日 / 一日 / 折扣碼）</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-:root{
-  --bg:#f4f1fb; --surface:#fff; --ink:#1a1430; --text:#56506f; --muted:#8c88a6;
-  --line:#e9e3f5; --primary:#6d4df6; --primary-d:#5a36e8; --grad:linear-gradient(135deg,#7b5cff,#5b7cff);
-  --shadow:0 18px 40px -20px rgba(76,46,170,.30); --shadow-sm:0 8px 22px -12px rgba(76,46,170,.22);
-  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-  --sans:'Noto Sans TC',-apple-system,'PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
-}
+:root{--bg:#f4f1fb;--surface:#fff;--ink:#1a1430;--text:#56506f;--muted:#8c88a6;--line:#e9e3f5;
+  --primary:#6d4df6;--primary-d:#5a36e8;--grad:linear-gradient(135deg,#7b5cff,#5b7cff);
+  --shadow:0 18px 40px -20px rgba(76,46,170,.30);--shadow-sm:0 8px 22px -12px rgba(76,46,170,.22);
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;--sans:'Noto Sans TC',-apple-system,'PingFang TC',system-ui,sans-serif;}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{font-family:var(--sans);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+html,body{font-family:var(--sans);color:var(--text);line-height:1.6}
 body{background:radial-gradient(1100px 600px at 82% -12%,rgba(123,92,255,.14),transparent 60%),var(--bg);min-height:100vh}
 .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 64px}
-
-/* login */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .login .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:40px 34px;width:100%;max-width:380px;text-align:center}
-.login h1{font-weight:900;font-size:26px;color:var(--ink);margin-bottom:6px}
+.login h1{font-weight:900;font-size:24px;color:var(--ink);margin-bottom:6px}
 .login p{font-size:14px;color:var(--muted);margin-bottom:22px}
-.login input{width:100%;font-family:var(--sans);font-size:15px;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;background:#faf9ff;color:var(--ink);margin-bottom:14px}
-.login input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(109,77,246,.14)}
-.btn{font-family:var(--sans);font-weight:700;font-size:15px;border:0;border-radius:999px;background:var(--grad);color:#fff;padding:13px 24px;cursor:pointer;box-shadow:0 12px 24px -10px rgba(109,77,246,.6);transition:transform .15s,filter .15s}
-.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
-.btn.full{width:100%}
-.btn.ghost{background:#fff;color:var(--primary);border:1.5px solid #d9cefb;box-shadow:none}
-.msg{font-size:13px;margin-top:10px;min-height:18px}
-.msg.err{color:#d2473a}
-
-/* app header */
-header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
-header h1{font-weight:900;font-size:26px;color:var(--ink)}
+input,select{font-family:var(--sans);font-size:15px;color:var(--ink);padding:12px 14px;border:1.5px solid var(--line);border-radius:11px;background:#faf9ff;width:100%}
+input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(109,77,246,.14);background:#fff}
+.btn{font-family:var(--sans);font-weight:700;font-size:15px;border:0;border-radius:999px;background:var(--grad);color:#fff;padding:12px 22px;cursor:pointer;box-shadow:0 12px 24px -10px rgba(109,77,246,.6)}
+.btn.full{width:100%}.btn:hover{filter:brightness(1.05)}
+.msg{font-size:13px;margin-top:10px;min-height:18px}.msg.err{color:#d2473a}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+header h1{font-weight:900;font-size:24px;color:var(--ink)}
 header .sub{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:4px}
-header .actions{display:flex;gap:10px}
-header .actions button{font-family:var(--sans);font-weight:700;font-size:13px;border-radius:999px;padding:9px 16px;cursor:pointer;border:1.5px solid #d9cefb;background:#fff;color:var(--primary)}
-header .actions button:hover{background:#faf8ff}
-
-/* summary */
-.summary{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:22px}
+.ghostbtn{font-weight:700;font-size:13px;border-radius:999px;padding:9px 16px;cursor:pointer;border:1.5px solid #d9cefb;background:#fff;color:var(--primary)}
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tab{font-weight:700;font-size:14px;border-radius:999px;padding:9px 18px;cursor:pointer;border:1.5px solid var(--line);background:#fff;color:var(--text)}
+.tab.on{background:var(--grad);color:#fff;border-color:transparent}
+.panel{display:none}.panel.on{display:block}
+.panel-note{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px}
+.summary{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
 @media(max-width:760px){.summary{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:420px){.summary{grid-template-columns:repeat(2,1fr)}}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:16px 14px;text-align:center}
-.stat .n{font-weight:900;font-size:26px;color:var(--ink);line-height:1}
-.stat .l{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px}
-.stat.hl .n{color:var(--primary)}
-.stat.ok .n{color:#0f8a4d}
-
-/* table */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:14px;text-align:center}
+.stat .n{font-weight:900;font-size:24px;color:var(--ink)}.stat .l{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px}
+.stat.ok .n{color:#0f8a4d}.stat.hl .n{color:var(--primary)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);padding:22px;margin-bottom:18px}
+.card h2{font-weight:800;font-size:18px;color:var(--ink);margin-bottom:14px}
 .tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);overflow:auto}
 table{width:100%;border-collapse:collapse;min-width:760px}
-th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);font-size:14px;white-space:nowrap}
-th{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;background:#faf8ff;position:sticky;top:0}
-td{color:var(--ink)}
-tr:last-child td{border-bottom:0}
-td.name{font-weight:700}
-td .mono{font-family:var(--mono);font-size:13px;color:var(--text)}
-.status-sel{font-family:var(--sans);font-weight:700;font-size:13px;border-radius:999px;padding:7px 12px;border:1.5px solid var(--line);cursor:pointer;background:#fff}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;white-space:nowrap}
+th{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;background:#faf8ff;position:sticky;top:0}
+td{color:var(--ink)}tr:last-child td{border-bottom:0}
+.mono{font-family:var(--mono);font-size:13px}
+.status-sel{font-weight:700;font-size:13px;border-radius:999px;padding:7px 10px;border:1.5px solid var(--line);cursor:pointer;width:auto}
 .status-sel[data-v="paid"]{color:#0f8a4d;border-color:#b7e9cd;background:#e7f8ee}
 .status-sel[data-v="pending"]{color:#b8772a;border-color:#ffd9b8;background:#fff4e9}
 .status-sel[data-v="checked_in"]{color:#2a5fb8;border-color:#bcd2f5;background:#eaf1ff}
 .status-sel[data-v="cancelled"]{color:#8a8696;border-color:#e1dcef;background:#f3f1f9}
-.empty{padding:48px 20px;text-align:center;color:var(--muted)}
-.hint{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.7}
-.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:11px 20px;border-radius:999px;box-shadow:var(--shadow);opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
+.empty{padding:44px 20px;text-align:center;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--ink)}
+.field small{font-weight:400;color:var(--muted)}
+.code-card{display:flex;gap:16px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px;flex-wrap:wrap}
+.code-card .qr{width:120px;height:120px;flex:none;background:#fff;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.code-card .qr img{width:100%;height:100%}
+.code-card .meta{flex:1;min-width:200px}
+.code-card .meta .big{font-family:var(--mono);font-weight:700;font-size:18px;color:var(--ink)}
+.code-card .meta .small{font-size:12.5px;color:var(--muted);margin-top:4px}
+.code-card .acts{display:flex;flex-direction:column;gap:8px}
+.minibtn{font-size:12px;font-weight:700;border-radius:999px;padding:7px 14px;cursor:pointer;border:1.5px solid #d9cefb;background:#fff;color:var(--primary);text-align:center}
+.hint{font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:11px 20px;border-radius:999px;box-shadow:var(--shadow);opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
 .toast.show{opacity:1}
 </style>
 </head>
 <body>
 
-<!-- 登入 -->
 <div class="login" id="login">
   <div class="card">
     <h1>報名後台 🔐</h1>
-    <p>Claude 半日展示班 · 請輸入管理密碼</p>
+    <p>Claude 課程 · 請輸入管理密碼</p>
     <input id="pw" type="password" placeholder="管理密碼" autocomplete="current-password" />
-    <button class="btn full" id="loginBtn">進入後台</button>
+    <button class="btn full" id="loginBtn" style="margin-top:14px">進入後台</button>
     <p class="msg" id="loginMsg"></p>
   </div>
 </div>
 
-<!-- 後台 -->
 <div class="wrap" id="app" hidden>
   <header>
-    <div>
-      <h1>半日班報名後台</h1>
-      <div class="sub" id="sessionLabel">場次：2026/06/07（日）13:30–16:30</div>
-    </div>
-    <div class="actions">
-      <button id="refreshBtn">↻ 重新整理</button>
-      <button id="logoutBtn">登出</button>
+    <div><h1>報名後台</h1><div class="sub">半日班 6/07 · 一日班 6/14 · 折扣碼 / QR</div></div>
+    <div style="display:flex;gap:10px">
+      <button class="ghostbtn" id="refreshBtn">↻ 重新整理</button>
+      <button class="ghostbtn" id="logoutBtn">登出</button>
     </div>
   </header>
 
-  <div class="summary" id="summary"></div>
-
-  <div class="tablewrap">
-    <table>
-      <thead>
-        <tr><th>報名時間</th><th>姓名</th><th>電話</th><th>Email</th><th>匯款末五碼</th><th>狀態（可改）</th></tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
+  <div class="tabs">
+    <div class="tab on" data-tab="half">🌊 半日班報名</div>
+    <div class="tab" data-tab="one">🎓 一日班報名</div>
+    <div class="tab" data-tab="codes">🏷️ 折扣碼 / QR</div>
   </div>
-  <p class="hint">
-    狀態說明：<b>待匯款</b> → <b>已收保證金（報名成功）</b> → <b>已報到</b>；改成「已取消」會釋放一個名額。<br/>
-    改動即時寫入資料庫，前台「剩餘名額」會跟著變（已取消不佔名額）。
-  </p>
+
+  <!-- 半日班 -->
+  <div class="panel on" id="panel-half">
+    <div class="panel-note">半日展示班 · 2026/06/07（日）13:30–16:30 · 保證金 NT$100</div>
+    <div class="summary" id="halfSummary"></div>
+    <div class="tablewrap"><table><thead><tr>
+      <th>報名時間</th><th>姓名</th><th>電話</th><th>Email</th><th>匯款末五碼</th><th>狀態（可改）</th>
+    </tr></thead><tbody id="halfRows"></tbody></table></div>
+    <p class="hint">待匯款 → 已收保證金（報名成功）→ 已報到；改「已取消」釋放名額。</p>
+  </div>
+
+  <!-- 一日班 -->
+  <div class="panel" id="panel-one">
+    <div class="panel-note">一日實作上線班 · 2026/06/14（六）08:30–17:00 · 原價 NT$6,800（優惠碼可折）</div>
+    <div class="summary" id="oneSummary"></div>
+    <div class="tablewrap"><table><thead><tr>
+      <th>報名時間</th><th>姓名</th><th>電話</th><th>Email</th><th>優惠碼</th><th>金額</th><th>末五碼</th><th>狀態</th>
+    </tr></thead><tbody id="oneRows"></tbody></table></div>
+    <p class="hint">待匯款 → 已收款（報名成功）→ 已報到；金額已含優惠碼折扣。</p>
+  </div>
+
+  <!-- 折扣碼 -->
+  <div class="panel" id="panel-codes">
+    <div class="card">
+      <h2>建立優惠折扣碼（一日班用）</h2>
+      <div class="grid2">
+        <div class="field">折扣碼 <small>留空＝自動產生</small><input id="dcCode" placeholder="例：WS614 或留空" /></div>
+        <div class="field">優惠價 NT$ <small>套用後價格</small><input id="dcPrice" type="number" value="4080" /></div>
+        <div class="field">標籤 <small>備註用（選填）</small><input id="dcLabel" placeholder="例：現場學員優惠" /></div>
+        <div class="field">使用次數上限 <small>留空＝不限</small><input id="dcMax" type="number" placeholder="不限" /></div>
+        <div class="field">到期時間 <small>選填</small><input id="dcExp" type="datetime-local" /></div>
+        <div class="field">&nbsp;<button class="btn" id="dcCreate" style="margin-top:2px">建立 / 更新折扣碼</button></div>
+      </div>
+      <p class="msg" id="dcMsg"></p>
+    </div>
+    <div class="card"><h2>現有折扣碼</h2><div id="codeList"></div></div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 <script>
 (function(){
-  const SB_URL = 'https://nxjtndpfccmzbrvfxczw.supabase.co';
-  const SB_KEY = 'sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
-  const SESSION = '2026-06-07';
-  const LS_KEY = 'cc_admin_token';
-  const STATUSES = [
-    ['pending','待匯款'],
-    ['paid','已收保證金（報名成功）'],
-    ['checked_in','已報到'],
-    ['cancelled','已取消'],
-  ];
-  const LABEL = Object.fromEntries(STATUSES);
+  const SB_URL='https://nxjtndpfccmzbrvfxczw.supabase.co';
+  const SB_KEY='sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
+  const HALF='2026-06-07', ONE='2026-06-14';
+  const ONEDAY_URL='https://claude.waterman-sports.com/oneday.html';
+  const LS='cc_admin_token';
+  const STATUSES=[['pending','待匯款'],['paid','已收款（報名成功）'],['checked_in','已報到'],['cancelled','已取消']];
+  const LABEL=Object.fromEntries(STATUSES);
+  const sb=window.supabase.createClient(SB_URL,SB_KEY);
+  const $=id=>document.getElementById(id);
+  let token=localStorage.getItem(LS)||'';
 
-  const sb = window.supabase.createClient(SB_URL, SB_KEY);
-  const $ = (id) => document.getElementById(id);
-  let token = localStorage.getItem(LS_KEY) || '';
-
-  function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
-  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-  function fmtTime(iso){ try{ const d=new Date(iso); const p=n=>String(n).padStart(2,'0'); return `${d.getMonth()+1}/${d.getDate()} ${p(d.getHours())}:${p(d.getMinutes())}`; }catch(e){ return iso; } }
-
-  async function load(){
-    const { data, error } = await sb.rpc('admin_list_registrations', { p_token: token, p_session: SESSION });
-    if (error){ return { ok:false, message:'連線異常，請稍後再試' }; }
-    return data;
+  function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
+  function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+  function ft(iso){try{const d=new Date(iso),p=n=>String(n).padStart(2,'0');return `${d.getMonth()+1}/${d.getDate()} ${p(d.getHours())}:${p(d.getMinutes())}`;}catch(e){return iso;}}
+  function fmt(n){return Number(n).toLocaleString('en-US');}
+  function statSummary(rows,cap,el){
+    const by=s=>rows.filter(r=>r.status===s).length;
+    const cancel=by('cancelled'),active=rows.length-cancel,remain=Math.max(0,cap-active);
+    el.innerHTML=[['總報名',rows.length,''],['已收款',by('paid'),'ok'],['待匯款',by('pending'),''],['已報到',by('checked_in'),''],['已取消',cancel,''],['剩餘名額',remain,'hl']]
+      .map(([l,n,c])=>`<div class="stat ${c}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
   }
+  function wireStatus(tbodyId,rpc,reload){
+    $(tbodyId).querySelectorAll('.status-sel').forEach(sel=>sel.addEventListener('change',async e=>{
+      const id=e.target.dataset.id,status=e.target.value,prev=e.target.dataset.v;e.target.disabled=true;
+      const {data,error}=await sb.rpc(rpc,{p_token:token,p_id:id,p_status:status});
+      e.target.disabled=false;
+      if(error||!data||!data.ok){toast((data&&data.message)||'更新失敗');e.target.value=prev;return;}
+      e.target.dataset.v=status;toast('已更新為「'+LABEL[status]+'」');reload();
+    }));
+  }
+  function selOpts(cur){return STATUSES.map(([v,l])=>`<option value="${v}" ${v===cur?'selected':''}>${l}</option>`).join('');}
 
-  function render(d){
-    const rows = d.rows || [];
-    const cap = d.capacity || 20;
-    const by = s => rows.filter(r=>r.status===s).length;
-    const paid=by('paid'), pend=by('pending'), chk=by('checked_in'), cancel=by('cancelled');
-    const active = rows.length - cancel;
-    const remain = Math.max(0, cap - active);
+  // ===== 半日班 =====
+  async function loadHalf(){
+    const {data,error}=await sb.rpc('admin_list_registrations',{p_token:token,p_session:HALF});
+    if(error) return {ok:false}; return data;
+  }
+  function renderHalf(d){
+    const rows=d.rows||[];statSummary(rows,d.capacity||20,$('halfSummary'));
+    if(!rows.length){$('halfRows').innerHTML=`<tr><td colspan="6"><div class="empty">目前沒有報名資料</div></td></tr>`;return;}
+    $('halfRows').innerHTML=rows.map(r=>`<tr>
+      <td class="mono">${ft(r.created_at)}</td><td style="font-weight:700">${esc(r.name)}</td>
+      <td class="mono">${esc(r.phone)}</td><td>${esc(r.email)}</td>
+      <td class="mono">${esc(r.transfer_last5)||'—'}</td>
+      <td><select class="status-sel" data-v="${r.status}" data-id="${r.id}">${selOpts(r.status)}</select></td></tr>`).join('');
+    wireStatus('halfRows','admin_set_status',refreshHalf);
+  }
+  async function refreshHalf(){const d=await loadHalf();if(!d||!d.ok){logout(d&&d.message);return;}renderHalf(d);}
 
-    $('summary').innerHTML = [
-      ['總報名', rows.length, ''],
-      ['已收保證金', paid, 'ok'],
-      ['待匯款', pend, ''],
-      ['已報到', chk, ''],
-      ['已取消', cancel, ''],
-      ['剩餘名額', remain, 'hl'],
-    ].map(([l,n,c])=>`<div class="stat ${c}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+  // ===== 一日班 =====
+  async function loadOne(){
+    const {data,error}=await sb.rpc('admin_list_oneday',{p_token:token,p_session:ONE});
+    if(error) return {ok:false}; return data;
+  }
+  function renderOne(d){
+    const rows=d.rows||[];statSummary(rows,d.capacity||8,$('oneSummary'));
+    if(!rows.length){$('oneRows').innerHTML=`<tr><td colspan="8"><div class="empty">目前沒有報名資料</div></td></tr>`;return;}
+    $('oneRows').innerHTML=rows.map(r=>`<tr>
+      <td class="mono">${ft(r.created_at)}</td><td style="font-weight:700">${esc(r.name)}</td>
+      <td class="mono">${esc(r.phone)}</td><td>${esc(r.email)}</td>
+      <td class="mono">${esc(r.discount_code)||'—'}</td><td style="font-weight:700">NT$${fmt(r.price)}</td>
+      <td class="mono">${esc(r.transfer_last5)||'—'}</td>
+      <td><select class="status-sel" data-v="${r.status}" data-id="${r.id}">${selOpts(r.status)}</select></td></tr>`).join('');
+    wireStatus('oneRows','admin_set_oneday_status',refreshOne);
+  }
+  async function refreshOne(){const d=await loadOne();if(!d||!d.ok){logout(d&&d.message);return;}renderOne(d);}
 
-    if (!rows.length){
-      $('rows').innerHTML = `<tr><td colspan="6"><div class="empty">目前沒有報名資料</div></td></tr>`;
-      return;
-    }
-    $('rows').innerHTML = rows.map(r=>{
-      const opts = STATUSES.map(([v,l])=>`<option value="${v}" ${v===r.status?'selected':''}>${l}</option>`).join('');
-      return `<tr>
-        <td class="mono">${fmtTime(r.created_at)}</td>
-        <td class="name">${esc(r.name)}</td>
-        <td><span class="mono">${esc(r.phone)}</span></td>
-        <td>${esc(r.email)}</td>
-        <td><span class="mono">${esc(r.transfer_last5)||'—'}</span></td>
-        <td><select class="status-sel" data-v="${r.status}" data-id="${r.id}">${opts}</select></td>
-      </tr>`;
+  // ===== 折扣碼 =====
+  function qrFor(code){return ONEDAY_URL+'?code='+encodeURIComponent(code);}
+  async function loadCodes(){
+    const {data,error}=await sb.rpc('admin_list_discounts',{p_token:token});
+    if(error||!data||!data.ok){logout(data&&data.message);return;}
+    const rows=data.rows||[];
+    if(!rows.length){$('codeList').innerHTML='<p style="color:var(--muted);font-size:14px">尚無折扣碼</p>';return;}
+    $('codeList').innerHTML=rows.map((r,i)=>{
+      const url=qrFor(r.code);
+      const uses=(r.used_count||0)+(r.max_uses?(' / '+r.max_uses):' / 不限');
+      const exp=r.expires_at?('到期 '+ft(r.expires_at)):'無到期';
+      return `<div class="code-card"><div class="qr" id="qr-${i}"></div>
+        <div class="meta"><div class="big">${esc(r.code)} · NT$${fmt(r.price)}</div>
+          <div class="small">${esc(r.label)||'（無標籤）'} ｜ 已用 ${uses} ｜ ${exp} ｜ ${r.is_active?'啟用中':'已停用'}</div>
+          <div class="small" style="word-break:break-all">${url}</div></div>
+        <div class="acts"><a class="minibtn" id="dl-${i}" download="qr-${esc(r.code)}.png">下載 QR</a>
+          <button class="minibtn" data-copy="${url}">複製連結</button></div></div>`;
     }).join('');
-
-    $('rows').querySelectorAll('.status-sel').forEach(sel=>{
-      sel.addEventListener('change', async (e)=>{
-        const id=e.target.dataset.id, status=e.target.value, prev=e.target.dataset.v;
-        e.target.disabled=true;
-        const { data, error } = await sb.rpc('admin_set_status', { p_token: token, p_id: id, p_status: status });
-        e.target.disabled=false;
-        if (error || !data || !data.ok){
-          toast((data&&data.message)||'更新失敗'); e.target.value=prev; return;
-        }
-        e.target.dataset.v=status;
-        toast('已更新為「'+LABEL[status]+'」');
-        refresh(); // 重新整理數字統計
-      });
+    rows.forEach((r,i)=>{
+      const tmp=document.createElement('div');
+      try{ new QRCode(tmp,{text:qrFor(r.code),width:360,height:360,correctLevel:QRCode.CorrectLevel.M}); }catch(e){ return; }
+      setTimeout(()=>{
+        const cv=tmp.querySelector('canvas');
+        const u=cv?cv.toDataURL('image/png'):(tmp.querySelector('img')?tmp.querySelector('img').src:'');
+        if(!u)return;const box=$('qr-'+i);if(box)box.innerHTML='<img src="'+u+'">';const dl=$('dl-'+i);if(dl)dl.href=u;
+      },40);
     });
   }
-
-  async function refresh(){
-    const d = await load();
-    if (!d || !d.ok){
-      // 密碼錯或失效 → 回登入
-      localStorage.removeItem(LS_KEY); token='';
-      $('app').hidden=true; $('login').style.display='flex';
-      $('loginMsg').textContent = (d&&d.message) || '請重新登入';
-      $('loginMsg').className='msg err';
-      return;
-    }
-    render(d);
-  }
-
-  function enter(){
-    $('login').style.display='none';
-    $('app').hidden=false;
-    refresh();
-  }
-
-  $('loginBtn').addEventListener('click', async ()=>{
-    const pw = $('pw').value.trim();
-    if (!pw){ $('loginMsg').textContent='請輸入密碼'; $('loginMsg').className='msg err'; return; }
-    $('loginMsg').textContent='驗證中…'; $('loginMsg').className='msg';
-    token = pw;
-    const d = await load();
-    if (!d || !d.ok){
-      token=''; $('loginMsg').textContent=(d&&d.message)||'登入失敗'; $('loginMsg').className='msg err'; return;
-    }
-    localStorage.setItem(LS_KEY, pw);
-    enter();
+  function genCode(){const s='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let o='WS';for(let i=0;i<5;i++)o+=s[Math.floor(Math.random()*s.length)];return o;}
+  $('dcCreate').addEventListener('click',async ()=>{
+    let code=$('dcCode').value.trim()||genCode();
+    const price=parseInt($('dcPrice').value,10)||4080;
+    const label=$('dcLabel').value.trim()||null;
+    const max=$('dcMax').value?parseInt($('dcMax').value,10):null;
+    const exp=$('dcExp').value?new Date($('dcExp').value).toISOString():null;
+    $('dcMsg').textContent='建立中…';$('dcMsg').className='msg';
+    const {data,error}=await sb.rpc('admin_create_discount',{p_token:token,p_code:code,p_label:label,p_price:price,p_max_uses:max,p_expires:exp});
+    if(error||!data||!data.ok){$('dcMsg').textContent=(data&&data.message)||'建立失敗';$('dcMsg').className='msg err';return;}
+    $('dcMsg').textContent='✓ 已建立折扣碼：'+data.code;$('dcMsg').className='msg';
+    $('dcCode').value='';$('dcLabel').value='';$('dcMax').value='';$('dcExp').value='';loadCodes();
   });
-  $('pw').addEventListener('keydown', e=>{ if(e.key==='Enter') $('loginBtn').click(); });
-  $('refreshBtn').addEventListener('click', refresh);
-  $('logoutBtn').addEventListener('click', ()=>{ localStorage.removeItem(LS_KEY); location.reload(); });
 
-  // 已登入過 → 自動進入
-  if (token) enter();
+  document.addEventListener('click',e=>{const c=e.target.closest('[data-copy]');if(!c)return;
+    navigator.clipboard.writeText(c.dataset.copy).then(()=>{const t=c.textContent;c.textContent='已複製 ✓';setTimeout(()=>c.textContent=t,1500);}).catch(()=>{});});
+
+  // ===== tabs =====
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+    $('panel-'+t.dataset.tab).classList.add('on');
+    if(t.dataset.tab==='half')refreshHalf();
+    else if(t.dataset.tab==='one')refreshOne();
+    else loadCodes();
+  }));
+
+  // ===== login =====
+  function logout(msg){localStorage.removeItem(LS);token='';$('app').hidden=true;$('login').style.display='flex';if(msg){$('loginMsg').textContent=msg;$('loginMsg').className='msg err';}}
+  function enter(){$('login').style.display='none';$('app').hidden=false;refreshHalf();}
+  $('loginBtn').addEventListener('click',async ()=>{
+    const pw=$('pw').value.trim();if(!pw){$('loginMsg').textContent='請輸入密碼';$('loginMsg').className='msg err';return;}
+    $('loginMsg').textContent='驗證中…';$('loginMsg').className='msg';token=pw;
+    const d=await loadHalf();
+    if(!d||!d.ok){token='';$('loginMsg').textContent=(d&&d.message)||'登入失敗';$('loginMsg').className='msg err';return;}
+    localStorage.setItem(LS,pw);enter();
+  });
+  $('pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click();});
+  $('refreshBtn').addEventListener('click',()=>{
+    const on=document.querySelector('.tab.on').dataset.tab;
+    if(on==='half')refreshHalf();else if(on==='one')refreshOne();else loadCodes();
+  });
+  $('logoutBtn').addEventListener('click',()=>{localStorage.removeItem(LS);location.reload();});
+  if(token)enter();
 })();
 </script>
 </body>
