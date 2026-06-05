@@ -125,7 +125,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
 
 <div class="toast" id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 <script>
 (function(){
   const SB_URL='https://nxjtndpfccmzbrvfxczw.supabase.co';
@@ -199,9 +199,15 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
         </div></div>`;
     }).join('');
     rows.forEach((r,i)=>{
-      QRCode.toDataURL(qrFor(r.code),{width:360,margin:2},(err,u)=>{
-        if(err)return;const box=$('qr-'+i);box.innerHTML='<img src="'+u+'">';const dl=$('dl-'+i);if(dl)dl.href=u;
-      });
+      const tmp=document.createElement('div');
+      try{ new QRCode(tmp,{text:qrFor(r.code),width:360,height:360,correctLevel:QRCode.CorrectLevel.M}); }catch(e){ return; }
+      setTimeout(()=>{
+        const cv=tmp.querySelector('canvas');
+        const u=cv?cv.toDataURL('image/png'):(tmp.querySelector('img')?tmp.querySelector('img').src:'');
+        if(!u)return;
+        const box=$('qr-'+i); if(box) box.innerHTML='<img src="'+u+'">';
+        const dl=$('dl-'+i); if(dl) dl.href=u;
+      },40);
     });
   }
   function genCode(){const c='WS';const s='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let o='';for(let i=0;i<5;i++)o+=s[Math.floor(Math.random()*s.length)];return c+o;}
