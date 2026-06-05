@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_base.css">
+<style>
+  .tl-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px 48px;margin-top:34px}
+  .tl{display:flex;flex-direction:column;gap:14px}
+  .tl-row{display:flex;align-items:baseline;gap:16px}
+  .tl-time{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--primary);min-width:50px;flex:0 0 50px}
+  .tl-body{font-size:17px;color:var(--text);line-height:1.35}
+  .tl-body b{color:var(--ink);font-weight:800}
+  .tl-row.meal .tl-body{color:var(--muted)}
+  .tl-row.ship .tl-body b{color:var(--amber)}
+</style>
+</head><body><div class="slide">
+  <div class="kicker">一日流程 · 09:00 — 17:00</div>
+  <h1>從 0 到<em>「有網址可以傳 LINE」</em></h1>
+
+  <div class="tl-cols">
+    <div class="tl">
+      <div class="tl-row"><div class="tl-time">09:00</div><div class="tl-body">開場 · <b>環境驗證</b>（課前裝好，現場只確認）</div></div>
+      <div class="tl-row"><div class="tl-time">09:30</div><div class="tl-body">觀念 · <b>Prompt / Skills / MCP</b> ＋ Claude 四件套</div></div>
+      <div class="tl-row"><div class="tl-time">10:15</div><div class="tl-body">STEP 1 · 把想法變成<b>規格 PRD</b>（Chat）</div></div>
+      <div class="tl-row"><div class="tl-time">11:00</div><div class="tl-body">STEP 2 · <b>視覺原型</b>（Design）</div></div>
+      <div class="tl-row meal"><div class="tl-time">12:00</div><div class="tl-body">午餐 · 邊吃邊跟 Claude 聊功能</div></div>
+    </div>
+    <div class="tl">
+      <div class="tl-row"><div class="tl-time">13:00</div><div class="tl-body">STEP 3 · <b>前端實作</b>（Claude Code · Next.js）</div></div>
+      <div class="tl-row"><div class="tl-time">14:30</div><div class="tl-body">STEP 4 · <b>迭代調整</b>（調樣式、加互動、RWD）</div></div>
+      <div class="tl-row meal"><div class="tl-time">15:30</div><div class="tl-body">下午茶 · 同學作品互看</div></div>
+      <div class="tl-row ship"><div class="tl-time">15:45</div><div class="tl-body">STEP 5 · <b>部署上線</b>（GitHub Pages → 拿到網址）</div></div>
+      <div class="tl-row"><div class="tl-time">16:30</div><div class="tl-body">結業 · <b>分享網址</b> ＋ 進階班預告</div></div>
+    </div>
+  </div>
+
+  <div class="brand">RAI <b>×</b> CLAUDE CODE CLASS</div>
+  <div class="pagenum">02 / 03</div>
+</div></body></html>

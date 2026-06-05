@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>一日實作上線班｜首梯 6/14 — Claude Code 實戰課程</title>
+<meta name="description" content="Claude Code 一日實作上線班：從 0 到有網址的真實作品。首梯 2026/06/14，限額 8 人。現場優惠碼可享折扣價。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#f4f1fb; --surface:#fff; --ink:#1a1430; --text:#56506f; --muted:#8c88a6;
+  --line:#e9e3f5; --primary:#6d4df6; --primary-d:#5a36e8; --primary-2:#4f7bf7;
+  --grad:linear-gradient(135deg,#7b5cff,#5b7cff);
+  --shadow:0 18px 40px -20px rgba(76,46,170,.30); --shadow-sm:0 8px 22px -12px rgba(76,46,170,.22);
+  --amber:#ef7a2e;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --sans:'Noto Sans TC',-apple-system,'PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{font-family:var(--sans);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(1100px 600px at 82% -12%,rgba(123,92,255,.14),transparent 60%),radial-gradient(900px 520px at -10% 2%,rgba(79,123,247,.10),transparent 55%),var(--bg);min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.topbar a:hover{color:var(--primary)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.kicker::before{content:"";width:24px;height:2px;border-radius:2px;background:var(--primary)}
+h1{font-weight:900;font-size:clamp(30px,6vw,52px);line-height:1.12;letter-spacing:-.01em;color:var(--ink)}
+h1 em{font-style:normal;color:var(--primary)}
+.lead{font-size:16px;color:var(--text);margin-top:14px}
+
+section{padding:40px 0}
+.hero{padding:46px 0 8px}
+
+/* countdown */
+.countdown{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-sm);padding:22px;margin-top:26px;text-align:center}
+.countdown .cd-label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--amber);font-weight:500;margin-bottom:14px}
+.cd-row{display:flex;justify-content:center;gap:10px}
+.cd-box{background:#1c1838;color:#fff;border-radius:12px;min-width:64px;padding:12px 8px}
+.cd-box .n{font-weight:900;font-size:30px;line-height:1;font-family:var(--mono)}
+.cd-box .u{font-size:11px;color:#b9b2e0;margin-top:6px}
+.countdown.ended .cd-box{background:#9a93b8}
+.cd-ended-msg{color:var(--amber);font-weight:700;margin-top:6px}
+
+/* price */
+.pricebox{background:linear-gradient(180deg,#f4f0ff,#fff);border:1.5px solid #c9b8fb;border-radius:20px;box-shadow:var(--shadow);padding:28px;margin-top:22px;text-align:center}
+.pricebox .orig{font-size:18px;color:var(--muted);text-decoration:line-through}
+.pricebox .now{font-weight:900;font-size:clamp(40px,9vw,64px);color:var(--primary);line-height:1;margin-top:4px}
+.pricebox .now small{font-size:20px;font-weight:700}
+.pricebox .save{display:inline-block;margin-top:12px;background:#fff2e7;border:1px solid #ffd9b8;color:var(--amber);font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px}
+.pricebox .codeon{display:inline-block;margin-top:10px;background:#e7f8ee;border:1px solid #b7e9cd;color:#0f8a4d;font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px}
+
+/* info grid */
+.info{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);overflow:hidden;margin-top:26px}
+@media(max-width:560px){.info{grid-template-columns:1fr}}
+.info .row{display:grid;grid-template-columns:80px 1fr;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.info .k{font-family:var(--mono);font-size:12px;color:var(--primary);font-weight:500}
+.info .v{font-size:15px;color:var(--ink);font-weight:500}
+.info .v small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margin-top:3px}
+
+.points{list-style:none;display:grid;gap:10px;margin-top:22px}
+.points li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:15px;color:var(--ink);box-shadow:var(--shadow-sm);padding-left:42px;position:relative}
+.points li::before{content:"✓";position:absolute;left:18px;color:var(--primary);font-weight:800}
+
+/* form */
+.formcard{background:var(--surface);border:1.5px solid #c9b8fb;border-radius:22px;box-shadow:var(--shadow);padding:30px 26px;margin-top:14px}
+.formcard h2{font-weight:900;font-size:24px;color:var(--ink);margin-bottom:6px}
+.formcard .sub{font-size:14px;color:var(--muted);margin-bottom:20px}
+#regForm{display:flex;flex-direction:column;gap:15px}
+#regForm label{display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:700;color:var(--ink)}
+#regForm label small{font-weight:400;color:var(--muted);font-size:12px}
+#regForm .req{color:#ef4444}
+#regForm input{font-family:var(--sans);font-size:15px;color:var(--ink);padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;background:#faf9ff;width:100%}
+#regForm input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(109,77,246,.14);background:#fff}
+.code-line{display:flex;gap:8px}
+.code-line input{flex:1;text-transform:uppercase}
+.code-line button{font-family:var(--sans);font-weight:700;font-size:13px;border:1.5px solid #d9cefb;background:#fff;color:var(--primary);border-radius:12px;padding:0 16px;cursor:pointer;white-space:nowrap}
+.code-msg{font-size:12.5px;margin-top:-6px}
+.code-msg.ok{color:#0f8a4d}.code-msg.warn{color:#d2473a}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:var(--sans);font-weight:700;font-size:16px;border:0;border-radius:999px;background:var(--grad);color:#fff;padding:15px 24px;cursor:pointer;box-shadow:0 12px 24px -10px rgba(109,77,246,.65);transition:transform .15s,filter .15s;margin-top:4px}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn[disabled]{opacity:.6;cursor:not-allowed;transform:none}
+.form-note{font-size:13.5px;line-height:1.6;color:var(--muted);min-height:1px}
+.form-note.warn{color:#d2473a}
+
+.reg-done{display:none}
+.reg-done .badge{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:500;color:#0f8a4d;background:#e7f8ee;border:1px solid #b7e9cd;padding:7px 14px;border-radius:999px;margin-bottom:14px}
+.reg-done h3{font-weight:900;font-size:20px;color:var(--ink);margin-bottom:10px}
+.reg-done p{font-size:14.5px;color:var(--text)}
+.reg-done p strong{color:var(--ink)}
+.bank{margin-top:16px;background:#f6f3ff;border:1px solid #d9cefb;border-radius:14px;padding:6px 18px}
+.bank-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed #ddd2f7;font-size:15px}
+.bank-row:last-child{border-bottom:0}
+.bank-row span{width:48px;color:var(--muted);font-family:var(--mono);font-size:12px;flex:none}
+.bank-row b{color:var(--ink);font-weight:800;font-family:var(--mono)}
+.bank-row .amt{color:var(--primary);font-size:18px}
+.copy{margin-left:auto;font-size:12px;font-weight:700;cursor:pointer;color:var(--primary);background:#fff;border:1.5px solid #d9cefb;border-radius:999px;padding:6px 14px}
+.line-btn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:16px;font-weight:700;color:#fff;background:#06c755;border:0;border-radius:999px;padding:14px;box-shadow:0 12px 24px -10px rgba(6,199,85,.55)}
+footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:11px 20px;border-radius:999px;box-shadow:var(--shadow);opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>RAI · CLAUDE 一日實作上線班</div>
+  <nav><a href="https://claude.waterman-sports.com/">← 回課程總覽</a></nav>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">FULL-DAY SHIPPING CLASS · 首梯 6/14</div>
+    <h1>一日 <em>實作上線班</em><br/>下課時，你手上有一個<br/>真實上線的作品。</h1>
+    <p class="lead">從一個想法，到一個有網址、可以傳 LINE 給朋友的真實作品——前端、資料庫、登入、API、雲端部署、自訂網域，一天走完整套。由連續創業者 Rai 手把手帶。</p>
+
+    <!-- 倒數 -->
+    <div class="countdown" id="countdown">
+      <div class="cd-label">⏳ 優惠倒數 · 現場優惠碼享折扣價</div>
+      <div class="cd-row">
+        <div class="cd-box"><div class="n" id="cdD">--</div><div class="u">天 DAYS</div></div>
+        <div class="cd-box"><div class="n" id="cdH">--</div><div class="u">時 HR</div></div>
+        <div class="cd-box"><div class="n" id="cdM">--</div><div class="u">分 MIN</div></div>
+        <div class="cd-box"><div class="n" id="cdS">--</div><div class="u">秒 SEC</div></div>
+      </div>
+      <div class="cd-ended-msg" id="cdEnded" hidden>優惠已截止（仍可依原價報名）</div>
+    </div>
+
+    <!-- 價格 -->
+    <div class="pricebox">
+      <div class="orig" id="origPrice">原價 NT$ 6,800</div>
+      <div class="now">NT$ <span id="nowPrice">6,800</span></div>
+      <div class="save" id="saveTag" hidden></div>
+      <div class="codeon" id="codeTag" hidden></div>
+    </div>
+  </div>
+</header>
+
+<section style="padding-top:14px">
+  <div class="wrap">
+    <div class="info">
+      <div class="row"><div class="k">梯次</div><div class="v">首梯 · 2026/06/14（六）<small>剩餘 <strong id="seatsLeft">—</strong> / 8 位</small></div></div>
+      <div class="row"><div class="k">時間</div><div class="v">08:30 – 17:00<small>午休 12:00 – 13:30</small></div></div>
+      <div class="row"><div class="k">地點</div><div class="v">水行者風箏衝浪俱樂部<small>南方澳漁港內 · 內埤情人灣海景教室</small></div></div>
+      <div class="row"><div class="k">名額</div><div class="v">限額 8 人<small>小班手把手實作</small></div></div>
+      <div class="row"><div class="k">費用</div><div class="v">NT$ 6,800<small>現場優惠碼可享折扣價</small></div></div>
+      <div class="row"><div class="k">攜帶</div><div class="v">自備筆電 + 咖啡茶飲<small>能順跑 Chrome 即可</small></div></div>
+    </div>
+
+    <ul class="points">
+      <li>把想法寫成規格（PRD）→ 前端原型 → 資料庫 → 登入 → 串 API</li>
+      <li>GitHub → Zeabur 一鍵部署，作品有 *.zeabur.app 網址</li>
+      <li>申請你自己的 .com / .tw 網域並綁定，下課即有專屬網址</li>
+      <li>課後 30 天 LINE 群組無限提問 + 完整 prompt／設定檔資源包</li>
+    </ul>
+  </div>
+</section>
+
+<section style="padding-top:6px">
+  <div class="wrap">
+    <div class="formcard">
+      <h2 id="formTitle">立即報名 · 首梯 6/14</h2>
+      <div class="sub">填表後依金額匯款、到 LINE 回報末五碼即完成。</div>
+
+      <form id="regForm" novalidate>
+        <label>姓名 <span class="req">*</span><input name="name" type="text" required autocomplete="name" placeholder="王小明" /></label>
+        <label>手機 <span class="req">*</span><input name="phone" type="tel" required autocomplete="tel" placeholder="0912-345-678" /></label>
+        <label>Email <span class="req">*</span><input name="email" type="email" required autocomplete="email" placeholder="you@example.com" /></label>
+        <label>優惠碼 <small>（現場掃 QR 會自動帶入；沒有可留空）</small>
+          <div class="code-line">
+            <input name="code" type="text" id="codeInput" placeholder="輸入優惠碼" />
+            <button type="button" id="applyCode">套用</button>
+          </div>
+        </label>
+        <div class="code-msg" id="codeMsg"></div>
+        <label>匯款帳號後五碼 <small>（選填，可匯款後再補）</small><input name="last5" type="text" inputmode="numeric" maxlength="5" placeholder="末五碼" /></label>
+        <button class="btn" type="submit" id="regSubmit">送出報名（應付 NT$ <span id="btnPrice">6,800</span>）→</button>
+        <p class="form-note" id="formNote" role="status"></p>
+      </form>
+
+      <div class="reg-done" id="regDone">
+        <div class="badge">✓ 報名已送出</div>
+        <h3>最後兩步：匯款 → LINE 回報末五碼</h3>
+        <p><strong>① 匯款</strong>：請於 3 日內匯款以保留名額。</p>
+        <div class="bank">
+          <div class="bank-row"><span>銀行</span><b>台灣銀行（004）</b></div>
+          <div class="bank-row"><span>帳號</span><b id="bankAcct">089004186688</b><button type="button" class="copy" data-copy="089004186688">複製</button></div>
+          <div class="bank-row"><span>戶名</span><b>陳建文</b></div>
+          <div class="bank-row"><span>金額</span><b class="amt" id="payAmount">NT$ 6,800</b></div>
+        </div>
+        <p style="margin-top:14px"><strong>② 加 LINE 回報</strong>：到官方 LINE 告知<strong>匯款末五碼</strong>，核對後完成報名。</p>
+        <a class="line-btn" href="https://reurl.cc/53KR3n" target="_blank" rel="noopener">加 LINE 回報末五碼 →</a>
+        <p style="margin-top:12px;font-size:13px;color:var(--muted)">完成後我們會以 Email／LINE 跟你確認。問題請洽 LINE。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 RAI · 水行者運動國際 · 宜蘭蘇澳 · rai@waterman.cc</footer>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  // ===== 設定 =====
+  const SB_URL='https://nxjtndpfccmzbrvfxczw.supabase.co';
+  const SB_KEY='sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
+  const SESSION='2026-06-14';
+  const OFFER_DEADLINE='2026-06-13T23:59:00+08:00';  // ★ 優惠截止（待 Rai 確認，可改這行）
+
+  const sb=window.supabase.createClient(SB_URL,SB_KEY);
+  const $=id=>document.getElementById(id);
+  const fmt=n=>n.toLocaleString('en-US');
+  let basePrice=6800, curPrice=6800, appliedCode='';
+
+  function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
+  function setNote(m,k){const n=$('formNote');n.textContent=m||'';n.className='form-note'+(k?' '+k:'');}
+
+  function renderPrice(){
+    $('nowPrice').textContent=fmt(curPrice);
+    $('btnPrice').textContent=fmt(curPrice);
+    $('payAmount').textContent='NT$ '+fmt(curPrice);
+    if(curPrice<basePrice){
+      $('origPrice').textContent='原價 NT$ '+fmt(basePrice);
+      $('origPrice').style.display='';
+      $('saveTag').hidden=false;$('saveTag').textContent='現省 NT$ '+fmt(basePrice-curPrice);
+    }else{
+      $('origPrice').style.display='none';$('saveTag').hidden=true;
+    }
+  }
+
+  // ===== 倒數 =====
+  function tick(){
+    const end=new Date(OFFER_DEADLINE).getTime();
+    const now=Date.now(); let d=Math.floor((end-now)/1000);
+    if(d<=0){document.getElementById('countdown').classList.add('ended');$('cdEnded').hidden=false;
+      $('cdD').textContent='0';$('cdH').textContent='00';$('cdM').textContent='00';$('cdS').textContent='00';return;}
+    const days=Math.floor(d/86400);d-=days*86400;
+    const h=Math.floor(d/3600);d-=h*3600;const m=Math.floor(d/60);const s=d-m*60;
+    $('cdD').textContent=days;$('cdH').textContent=String(h).padStart(2,'0');
+    $('cdM').textContent=String(m).padStart(2,'0');$('cdS').textContent=String(s).padStart(2,'0');
+  }
+
+  // ===== 優惠碼 =====
+  async function applyCode(code){
+    code=(code||'').trim().toUpperCase();
+    const msg=$('codeMsg');
+    if(!code){curPrice=basePrice;appliedCode='';$('codeTag').hidden=true;msg.textContent='';renderPrice();return;}
+    try{
+      const {data,error}=await sb.rpc('check_discount',{p_code:code});
+      if(error) throw error;
+      if(data&&data.valid){
+        curPrice=data.price;appliedCode=code;
+        $('codeTag').hidden=false;$('codeTag').textContent='優惠碼 '+code+' 已套用'+(data.label?'（'+data.label+'）':'');
+        msg.textContent='✓ 已套用優惠價 NT$ '+fmt(data.price);msg.className='code-msg ok';
+      }else{
+        curPrice=basePrice;appliedCode='';$('codeTag').hidden=true;
+        msg.textContent=(data&&data.message)||'優惠碼無效';msg.className='code-msg warn';
+      }
+    }catch(e){msg.textContent='優惠碼驗證失敗，請稍後再試';msg.className='code-msg warn';}
+    renderPrice();
+  }
+
+  async function refreshSeats(){
+    try{
+      const {data,error}=await sb.rpc('get_oneday_seats',{p_session:SESSION});
+      if(error) throw error;
+      basePrice=data.price||6800; if(!appliedCode) curPrice=basePrice;
+      $('seatsLeft').textContent=Math.max(0,data.remaining|0);
+      renderPrice();
+      if(!data.is_open||data.remaining<=0){
+        $('seatsLeft').textContent='0';
+        const b=$('regSubmit'); b.textContent='名額已滿 · 填表候補 →';
+        setNote('首梯 8 位已額滿，仍可送出資料候補。','warn');
+      }
+    }catch(e){}
+  }
+
+  // ===== 送出報名 =====
+  $('regForm').addEventListener('submit',async e=>{
+    e.preventDefault();const f=e.target,b=$('regSubmit');
+    const name=f.name.value.trim(),phone=f.phone.value.trim(),email=f.email.value.trim();
+    if(!name||!phone||!email){setNote('請完整填寫姓名 / 手機 / Email。','warn');return;}
+    if(!/^\S+@\S+\.\S+$/.test(email)){setNote('Email 格式看起來不太對。','warn');return;}
+    const orig=b.textContent;b.disabled=true;b.textContent='送出中…';setNote('');
+    try{
+      const {data,error}=await sb.rpc('register_oneday',{
+        p_name:name,p_phone:phone,p_email:email,
+        p_last5:f.last5.value.trim()||null,p_code:(f.code.value.trim()||null),p_session:SESSION});
+      if(error) throw error;
+      if(!data||!data.ok){setNote((data&&data.message)||'報名失敗，請稍後再試。','warn');b.disabled=false;b.textContent=orig;if(data&&data.reason==='full')refreshSeats();return;}
+      $('payAmount').textContent='NT$ '+fmt(data.price);
+      f.style.display='none';$('formTitle').style.display='none';document.querySelector('.formcard .sub').style.display='none';
+      $('regDone').style.display='block';$('regDone').scrollIntoView({behavior:'smooth',block:'center'});
+      refreshSeats();
+    }catch(err){setNote('連線異常，請稍後再試，或直接 LINE 我們。','warn');b.disabled=false;b.textContent=orig;}
+  });
+
+  document.addEventListener('click',e=>{
+    const c=e.target.closest('.copy');if(!c)return;
+    navigator.clipboard.writeText(c.dataset.copy).then(()=>{const t=c.textContent;c.textContent='已複製 ✓';setTimeout(()=>c.textContent=t,1500);}).catch(()=>{});
+  });
+  $('applyCode').addEventListener('click',()=>applyCode($('codeInput').value));
+  $('codeInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyCode(e.target.value);}});
+
+  // 啟動：URL 帶 code 自動套用
+  const urlCode=new URLSearchParams(location.search).get('code');
+  if(urlCode){$('codeInput').value=urlCode.toUpperCase();}
+  tick();setInterval(tick,1000);
+  refreshSeats().then(()=>{ if(urlCode) applyCode(urlCode); });
+})();
+</script>
+</body>
+</html>

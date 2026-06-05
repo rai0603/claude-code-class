@@ -1,0 +1,39 @@
+/* ---- 一日實作上線班 · 簡報共用樣式（對齊網站亮色品牌）---- */
+:root{
+  --bg:#f4f1fb; --surface:#ffffff;
+  --ink:#1a1430; --text:#56506f; --muted:#8c88a6; --line:#e9e3f5;
+  --primary:#6d4df6; --primary-2:#4f7bf7; --amber:#ef7a2e;
+  --grad:linear-gradient(135deg,#7b5cff 0%,#5b7cff 100%);
+  --shadow:0 26px 60px -28px rgba(76,46,170,.40);
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  --sans:'Noto Sans TC',-apple-system,'PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden}
+body{
+  font-family:var(--sans); color:var(--text);
+  background:
+    radial-gradient(900px 520px at 88% -12%, rgba(123,92,255,.16), transparent 60%),
+    radial-gradient(760px 520px at -8% 112%, rgba(79,123,247,.14), transparent 60%),
+    var(--bg);
+  position:relative;
+}
+.slide{width:1280px;height:720px;padding:72px 84px;display:flex;flex-direction:column;position:relative}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--primary);font-weight:500;display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:34px;height:2px;background:var(--grad);border-radius:2px}
+h1{font-family:var(--sans);font-weight:900;color:var(--ink);font-size:50px;line-height:1.12;letter-spacing:-.5px;margin-top:18px}
+h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:19px;color:var(--text);margin-top:14px;line-height:1.6}
+/* footer brand */
+.brand{position:absolute;left:84px;bottom:40px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.brand b{color:var(--primary);font-weight:500}
+.pagenum{position:absolute;right:84px;bottom:40px;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em}
+/* cards / columns */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:34px 34px 30px;box-shadow:var(--shadow)}
+.card .tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);font-weight:500}
+.card h3{font-family:var(--sans);font-weight:900;color:var(--ink);font-size:25px;margin-top:8px;margin-bottom:18px}
+.list{list-style:none;display:flex;flex-direction:column;gap:14px}
+.list li{position:relative;padding-left:28px;font-size:17.5px;color:var(--text);line-height:1.45}
+.list li::before{content:"";position:absolute;left:0;top:9px;width:11px;height:11px;border-radius:50%;background:var(--grad)}
+.list li b{color:var(--ink);font-weight:800}
