@@ -51,6 +51,9 @@ section{padding:40px 0}
 .pricebox .now small{font-size:20px;font-weight:700}
 .pricebox .save{display:inline-block;margin-top:12px;background:#fff2e7;border:1px solid #ffd9b8;color:var(--amber);font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px}
 .pricebox .codeon{display:inline-block;margin-top:10px;background:#e7f8ee;border:1px solid #b7e9cd;color:#0f8a4d;font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px}
+.pricebox .seatsline{margin-top:16px;font-size:15px;color:var(--text);font-weight:500}
+.pricebox .seatsline strong{color:var(--amber);font-weight:900;font-size:20px}
+.pricebox .seatsline.full strong{color:#d2473a}
 
 /* info grid */
 .info{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);overflow:hidden;margin-top:26px}
@@ -134,6 +137,7 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
       <div class="now">NT$ <span id="nowPrice">6,800</span></div>
       <div class="save" id="saveTag" hidden></div>
       <div class="codeon" id="codeTag" hidden></div>
+      <div class="seatsline" id="seatsLine">🔥 首梯限額 8 人 · 僅剩 <strong id="seatsLeft2">—</strong> 位</div>
     </div>
   </div>
 </header>
@@ -268,10 +272,14 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
       const {data,error}=await sb.rpc('get_oneday_seats',{p_session:SESSION});
       if(error) throw error;
       basePrice=data.price||6800; if(!appliedCode) curPrice=basePrice;
-      $('seatsLeft').textContent=Math.max(0,data.remaining|0);
+      const left=Math.max(0,data.remaining|0);
+      $('seatsLeft').textContent=left;
+      const s2=$('seatsLeft2'); if(s2) s2.textContent=left;
       renderPrice();
       if(!data.is_open||data.remaining<=0){
-        $('seatsLeft').textContent='0';
+        $('seatsLeft').textContent='0'; if(s2) s2.textContent='0';
+        $('seatsLine').classList.add('full');
+        $('seatsLine').innerHTML='⚠️ 首梯 8 位已額滿 · 可填表候補';
         const b=$('regSubmit'); b.textContent='名額已滿 · 填表候補 →';
         setNote('首梯 8 位已額滿，仍可送出資料候補。','warn');
       }
