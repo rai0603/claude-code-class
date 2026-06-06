@@ -100,6 +100,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   <!-- 半日班 -->
   <div class="panel on" id="panel-half">
     <div class="panel-note">半日展示班 · 2026/06/07（日）13:30–16:30 · 保證金 NT$100</div>
+    <div style="margin-bottom:14px"><button class="ghostbtn" id="printHalf">🖨️ 列印 / 匯出 PDF</button></div>
     <div class="summary" id="halfSummary"></div>
     <div class="tablewrap"><table><thead><tr>
       <th>報名時間</th><th>姓名</th><th>電話</th><th>Email</th><th>匯款末五碼</th><th>狀態（可改）</th>
@@ -110,6 +111,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   <!-- 一日班 -->
   <div class="panel" id="panel-one">
     <div class="panel-note">一日實作上線班 · 2026/06/14（六）08:30–17:00 · 原價 NT$6,800（優惠碼可折）</div>
+    <div style="margin-bottom:14px"><button class="ghostbtn" id="printOne">🖨️ 列印 / 匯出 PDF</button></div>
     <div class="summary" id="oneSummary"></div>
     <div class="tablewrap"><table><thead><tr>
       <th>報名時間</th><th>姓名</th><th>電話</th><th>Email</th><th>優惠碼</th><th>金額</th><th>末五碼</th><th>狀態</th>
@@ -150,6 +152,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   const sb=window.supabase.createClient(SB_URL,SB_KEY);
   const $=id=>document.getElementById(id);
   let token=localStorage.getItem(LS)||'';
+  let lastHalf=null, lastOne=null;
 
   function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
   function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
@@ -172,12 +175,49 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   }
   function selOpts(cur){return STATUSES.map(([v,l])=>`<option value="${v}" ${v===cur?'selected':''}>${l}</option>`).join('');}
 
+  // ===== 列印 / 匯出 PDF =====
+  function nowStr(){var d=new Date(),p=n=>String(n).padStart(2,'0');return d.getFullYear()+'/'+p(d.getMonth()+1)+'/'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+  function printTable(o){
+    var css='*{box-sizing:border-box}body{font-family:\'Noto Sans TC\',\'PingFang TC\',system-ui,sans-serif;color:#1a1430;padding:22px;font-size:13px}'
+      +'h1{font-size:20px;margin:0 0 4px}.sub{color:#666;font-size:12px}.stats{font-size:12px;color:#333;margin:8px 0 14px}'
+      +'table{width:100%;border-collapse:collapse}th,td{border:1px solid #c9c2e0;padding:7px 9px;text-align:left;font-size:12px}'
+      +'th{background:#efeafc}tbody tr:nth-child(even) td{background:#f7f5fd}@page{margin:12mm}';
+    var head='<tr>'+o.headers.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr>';
+    var body=o.rows.length?o.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+esc(c==null?'':c)+'</td>';}).join('')+'</tr>';}).join('')
+                          :'<tr><td colspan="'+o.headers.length+'" style="text-align:center;color:#999">目前沒有報名資料</td></tr>';
+    var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+esc(o.title)+'</title><style>'+css+'</style></head><body>'
+      +'<h1>'+esc(o.title)+'</h1><div class="sub">'+esc(o.sub)+'</div><div class="stats">'+esc(o.stats)+'</div>'
+      +'<table><thead>'+head+'</thead><tbody>'+body+'</tbody></table></body></html>';
+    var ifr=document.createElement('iframe');
+    ifr.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+    document.body.appendChild(ifr);
+    var doc=ifr.contentWindow.document; doc.open(); doc.write(html); doc.close();
+    setTimeout(function(){ try{ifr.contentWindow.focus();ifr.contentWindow.print();}catch(e){} setTimeout(function(){document.body.removeChild(ifr);},2000); },350);
+  }
+  function printHalf(){
+    if(!lastHalf){toast('名單尚未載入');return;}
+    var rs=lastHalf.rows||[];var by=function(s){return rs.filter(function(r){return r.status===s;}).length;};
+    printTable({title:'半日展示班 報名名單',sub:'場次 2026/06/07（日）13:30–16:30 ｜ 列印於 '+nowStr(),
+      stats:'總報名 '+rs.length+' ｜ 已收保證金 '+by('paid')+' ｜ 待匯款 '+by('pending')+' ｜ 已報到 '+by('checked_in')+' ｜ 取消 '+by('cancelled'),
+      headers:['報名時間','姓名','電話','Email','匯款末五碼','狀態'],
+      rows:rs.map(function(r){return [ft(r.created_at),r.name,r.phone,r.email,r.transfer_last5||'',LABEL[r.status]||r.status];})});
+  }
+  function printOne(){
+    if(!lastOne){toast('名單尚未載入');return;}
+    var rs=lastOne.rows||[];var by=function(s){return rs.filter(function(r){return r.status===s;}).length;};
+    printTable({title:'一日實作上線班 報名名單',sub:'場次 2026/06/14（六）08:30–17:00 ｜ 列印於 '+nowStr(),
+      stats:'總報名 '+rs.length+' ｜ 已收款 '+by('paid')+' ｜ 待匯款 '+by('pending')+' ｜ 已報到 '+by('checked_in')+' ｜ 取消 '+by('cancelled'),
+      headers:['報名時間','姓名','電話','Email','優惠碼','金額','末五碼','狀態'],
+      rows:rs.map(function(r){return [ft(r.created_at),r.name,r.phone,r.email,r.discount_code||'','NT$'+fmt(r.price),r.transfer_last5||'',LABEL[r.status]||r.status];})});
+  }
+
   // ===== 半日班 =====
   async function loadHalf(){
     const {data,error}=await sb.rpc('admin_list_registrations',{p_token:token,p_session:HALF});
     if(error) return {ok:false}; return data;
   }
   function renderHalf(d){
+    lastHalf=d;
     const rows=d.rows||[];statSummary(rows,d.capacity||20,$('halfSummary'));
     if(!rows.length){$('halfRows').innerHTML=`<tr><td colspan="6"><div class="empty">目前沒有報名資料</div></td></tr>`;return;}
     $('halfRows').innerHTML=rows.map(r=>`<tr>
@@ -195,6 +235,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
     if(error) return {ok:false}; return data;
   }
   function renderOne(d){
+    lastOne=d;
     const rows=d.rows||[];statSummary(rows,d.capacity||8,$('oneSummary'));
     if(!rows.length){$('oneRows').innerHTML=`<tr><td colspan="8"><div class="empty">目前沒有報名資料</div></td></tr>`;return;}
     $('oneRows').innerHTML=rows.map(r=>`<tr>
@@ -278,6 +319,8 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
     if(on==='half')refreshHalf();else if(on==='one')refreshOne();else loadCodes();
   });
   $('logoutBtn').addEventListener('click',()=>{localStorage.removeItem(LS);location.reload();});
+  $('printHalf').addEventListener('click',printHalf);
+  $('printOne').addEventListener('click',printOne);
   if(token)enter();
 })();
 </script>
