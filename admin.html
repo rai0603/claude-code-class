@@ -84,7 +84,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
 
 <div class="wrap" id="app" hidden>
   <header>
-    <div><h1>報名後台</h1><div class="sub">半日班 6/07 · 一日班 6/14 · 折扣碼 / QR</div></div>
+    <div><h1>報名後台</h1><div class="sub">半日班（首梯 6/07＋第二梯 6/17）· 一日班 6/14 · 折扣碼 / QR</div></div>
     <div style="display:flex;gap:10px">
       <button class="ghostbtn" id="refreshBtn">↻ 重新整理</button>
       <button class="ghostbtn" id="logoutBtn">登出</button>
@@ -99,8 +99,15 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
 
   <!-- 半日班 -->
   <div class="panel on" id="panel-half">
-    <div class="panel-note">半日展示班 · 2026/06/07（日）13:30–16:30 · 保證金 NT$100</div>
-    <div style="margin-bottom:14px"><button class="ghostbtn" id="printHalf">🖨️ 列印 / 匯出 PDF</button></div>
+    <div class="panel-note" id="halfNote">半日展示班 · 保證金 NT$100</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+      <label style="font-size:13px;color:var(--muted);white-space:nowrap;width:auto">梯次</label>
+      <select id="halfSession" style="width:auto;min-width:260px">
+        <option value="2026-06-17" selected>第二梯 · 6/17（三）09:00–12:00</option>
+        <option value="2026-06-07">首梯 · 6/07（日）13:30–16:30（已結束）</option>
+      </select>
+      <button class="ghostbtn" id="printHalf">🖨️ 列印 / 匯出 PDF</button>
+    </div>
     <div class="summary" id="halfSummary"></div>
     <div class="tablewrap"><table><thead><tr>
       <th>報名時間</th><th>姓名</th><th>電話</th><th>Email</th><th>匯款末五碼</th><th>狀態（可改）</th>
@@ -144,7 +151,10 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
 (function(){
   const SB_URL='https://nxjtndpfccmzbrvfxczw.supabase.co';
   const SB_KEY='sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
-  const HALF='2026-06-07', ONE='2026-06-14';
+  const ONE='2026-06-14';
+  const HALF_LABELS={'2026-06-17':'第二梯 · 2026/06/17（三）09:00–12:00','2026-06-07':'首梯 · 2026/06/07（日）13:30–16:30'};
+  function halfSession(){const el=$('halfSession');return el?el.value:'2026-06-17';}
+  function updateHalfNote(){const s=halfSession();const n=$('halfNote');if(n)n.textContent='半日展示班 · '+(HALF_LABELS[s]||s)+' · 保證金 NT$100';}
   const ONEDAY_URL='https://claude.waterman-sports.com/oneday.html';
   const LS='cc_admin_token';
   const STATUSES=[['pending','待匯款'],['paid','已收款（報名成功）'],['checked_in','已報到'],['cancelled','已取消']];
@@ -197,7 +207,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   function printHalf(){
     if(!lastHalf){toast('名單尚未載入');return;}
     var rs=lastHalf.rows||[];var by=function(s){return rs.filter(function(r){return r.status===s;}).length;};
-    printTable({title:'半日展示班 報名名單',sub:'場次 2026/06/07（日）13:30–16:30 ｜ 列印於 '+nowStr(),
+    printTable({title:'半日展示班 報名名單',sub:'場次 '+(HALF_LABELS[halfSession()]||halfSession())+' ｜ 列印於 '+nowStr(),
       stats:'總報名 '+rs.length+' ｜ 已收保證金 '+by('paid')+' ｜ 待匯款 '+by('pending')+' ｜ 已報到 '+by('checked_in')+' ｜ 取消 '+by('cancelled'),
       headers:['報名時間','姓名','電話','Email','匯款末五碼','狀態'],
       rows:rs.map(function(r){return [ft(r.created_at),r.name,r.phone,r.email,r.transfer_last5||'',LABEL[r.status]||r.status];})});
@@ -213,7 +223,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
 
   // ===== 半日班 =====
   async function loadHalf(){
-    const {data,error}=await sb.rpc('admin_list_registrations',{p_token:token,p_session:HALF});
+    const {data,error}=await sb.rpc('admin_list_registrations',{p_token:token,p_session:halfSession()});
     if(error) return {ok:false}; return data;
   }
   function renderHalf(d){
@@ -305,7 +315,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
 
   // ===== login =====
   function logout(msg){localStorage.removeItem(LS);token='';$('app').hidden=true;$('login').style.display='flex';if(msg){$('loginMsg').textContent=msg;$('loginMsg').className='msg err';}}
-  function enter(){$('login').style.display='none';$('app').hidden=false;refreshHalf();}
+  function enter(){$('login').style.display='none';$('app').hidden=false;updateHalfNote();refreshHalf();}
   $('loginBtn').addEventListener('click',async ()=>{
     const pw=$('pw').value.trim();if(!pw){$('loginMsg').textContent='請輸入密碼';$('loginMsg').className='msg err';return;}
     $('loginMsg').textContent='驗證中…';$('loginMsg').className='msg';token=pw;
@@ -321,6 +331,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   $('logoutBtn').addEventListener('click',()=>{localStorage.removeItem(LS);location.reload();});
   $('printHalf').addEventListener('click',printHalf);
   $('printOne').addEventListener('click',printOne);
+  $('halfSession').addEventListener('change',()=>{updateHalfNote();refreshHalf();});
   if(token)enter();
 })();
 </script>
