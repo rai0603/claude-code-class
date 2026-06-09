@@ -117,7 +117,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
 
   <!-- 一日班 -->
   <div class="panel" id="panel-one">
-    <div class="panel-note">一日實作上線班 · 2026/06/14（六）08:30–17:00 · 原價 NT$6,800（優惠碼可折）</div>
+    <div class="panel-note">一日實作上線班 · 2026/06/14（日）08:30–17:00 · 原價 NT$6,800（優惠碼可折）</div>
     <div style="margin-bottom:14px"><button class="ghostbtn" id="printOne">🖨️ 列印 / 匯出 PDF</button></div>
     <div class="summary" id="oneSummary"></div>
     <div class="tablewrap"><table><thead><tr>
@@ -215,7 +215,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   function printOne(){
     if(!lastOne){toast('名單尚未載入');return;}
     var rs=lastOne.rows||[];var by=function(s){return rs.filter(function(r){return r.status===s;}).length;};
-    printTable({title:'一日實作上線班 報名名單',sub:'場次 2026/06/14（六）08:30–17:00 ｜ 列印於 '+nowStr(),
+    printTable({title:'一日實作上線班 報名名單',sub:'場次 2026/06/14（日）08:30–17:00 ｜ 列印於 '+nowStr(),
       stats:'總報名 '+rs.length+' ｜ 已收款 '+by('paid')+' ｜ 待匯款 '+by('pending')+' ｜ 已報到 '+by('checked_in')+' ｜ 取消 '+by('cancelled'),
       headers:['報名時間','姓名','電話','Email','優惠碼','金額','末五碼','狀態'],
       rows:rs.map(function(r){return [ft(r.created_at),r.name,r.phone,r.email,r.discount_code||'','NT$'+fmt(r.price),r.transfer_last5||'',LABEL[r.status]||r.status];})});
