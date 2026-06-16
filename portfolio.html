@@ -134,9 +134,31 @@ a{color:inherit;text-decoration:none}
 footer{text-align:center;padding:30px 24px 46px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
 footer a{color:var(--primary);font-weight:500}
 
+/* 課程實況 */
+.live-sec{padding:8px 0 78px}
+.live-head{text-align:center;margin-bottom:32px}
+.live-head .kicker{margin-bottom:16px}
+.live-head h2{font-weight:900;color:var(--ink);font-size:clamp(23px,4vw,33px);line-height:1.26}
+.live-head h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.live-head p{font-size:15.5px;line-height:1.78;color:var(--text);max-width:56ch;margin:13px auto 0}
+.live-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.live-grid figure{margin:0;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow-sm);border:1px solid var(--line);aspect-ratio:4/3;background:#efeaff}
+.live-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.live-grid figure:hover img{transform:scale(1.05)}
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:80;background:rgba(16,12,32,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:30px}
+.lb.open{display:flex}
+.lb img{max-width:94vw;max-height:86vh;border-radius:12px;box-shadow:0 30px 80px -20px rgba(0,0,0,.7)}
+.lb .x{position:absolute;top:16px;right:22px;font-size:32px;color:#fff;cursor:pointer;line-height:1;opacity:.82}
+.lb .x:hover{opacity:1}
+.lb .nav{position:absolute;top:50%;transform:translateY(-50%);font-size:44px;color:#fff;cursor:pointer;padding:10px 16px;opacity:.7;user-select:none}
+.lb .nav:hover{opacity:1}
+.lb .prev{left:6px}.lb .next{right:6px}
+
 @media(max-width:560px){
   .works{grid-template-columns:1fr}
   .phead{padding:44px 0 20px}
+  .live-grid{grid-template-columns:1fr 1fr;gap:10px}
 }
 </style>
 </head>
@@ -154,7 +176,7 @@ footer a{color:var(--primary);font-weight:500}
 
 <header class="phead wrap">
   <div class="kicker">學員作品集 · Student Showcase</div>
-  <h1>零基礎，<em>三小時做出能上線的作品</em>。</h1>
+  <h1><em>一天課程</em>，就能做出能上線的作品。</h1>
   <p>下面每一個網站，都是學員在課堂上親手用 Claude 工作流做出來、真實部署上線、有網址、可以分享給家人朋友的作品。挑一個梯次看看——這就是你下課時能帶走的東西。</p>
 </header>
 
@@ -166,6 +188,24 @@ footer a{color:var(--primary);font-weight:500}
   <div class="panel-meta" id="panelMeta"></div>
   <div id="panel"></div>
 </main>
+
+<!-- 課程實況 -->
+<section class="wrap live-sec" id="live" hidden>
+  <div class="live-head">
+    <div class="kicker">課程實況 · On Site</div>
+    <h2>海景第一排，<em>邊看海邊把想法做上線</em>。</h2>
+    <p>宜蘭蘇澳南方澳漁港、窗外就是內埤情人灣——上面那些作品，就是學員在這片海景前親手做出來的。</p>
+  </div>
+  <div class="live-grid" id="liveGrid"></div>
+</section>
+
+<!-- lightbox -->
+<div class="lb" id="lb">
+  <span class="x" id="lbClose">×</span>
+  <span class="nav prev" id="lbPrev">‹</span>
+  <img id="lbImg" src="" alt="課程實況" />
+  <span class="nav next" id="lbNext">›</span>
+</div>
 
 <div class="wrap">
   <div class="foot-cta">
@@ -272,6 +312,49 @@ function select(i){
 }
 
 select(0);
+
+/* ============================================================
+   課程實況相簿 —— 照片放進 assets/portfolio/cohort-1/live/，
+   依序加進下面陣列即可；陣列為空時整個區塊自動隱藏。
+   ============================================================ */
+const LIVE_PHOTOS = [
+  { src: 'assets/portfolio/cohort-1/live/live-1.jpg', cap: '一對一手把手指導，零基礎也跟得上' },
+  { src: 'assets/portfolio/cohort-1/live/live-2.jpg', cap: '海景第一排，雙螢幕一邊看海一邊實作' },
+  { src: 'assets/portfolio/cohort-1/live/live-3.jpg', cap: '大螢幕同步講解，學員作品同場上線' },
+  { src: 'assets/portfolio/cohort-1/live/live-4.jpg', cap: '窗外就是內埤情人灣，把想法做成真網站' },
+];
+
+(function initLive(){
+  const sec  = document.getElementById('live');
+  const grid = document.getElementById('liveGrid');
+  if (!LIVE_PHOTOS.length) return;        // 沒照片就維持隱藏
+
+  sec.hidden = false;
+  grid.innerHTML = LIVE_PHOTOS.map((p, i) => `
+    <figure data-i="${i}"><img src="${p.src}" alt="${p.cap || '課程實況'}" loading="lazy" /></figure>`).join('');
+
+  const lb    = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  let cur = 0;
+  const show = i => {
+    cur = (i + LIVE_PHOTOS.length) % LIVE_PHOTOS.length;
+    lbImg.src = LIVE_PHOTOS[cur].src;
+    lbImg.alt = LIVE_PHOTOS[cur].cap || '課程實況';
+    lb.classList.add('open');
+  };
+  grid.querySelectorAll('figure').forEach(f =>
+    f.addEventListener('click', () => show(+f.dataset.i)));
+  document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('open'));
+  document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); show(cur - 1); });
+  document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); show(cur + 1); });
+  lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') lb.classList.remove('open');
+    if (e.key === 'ArrowLeft')  show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+})();
 </script>
 </body>
 </html>
