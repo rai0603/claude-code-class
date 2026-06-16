@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>一日實作上線班｜首梯 6/14 — Claude Code 實戰課程</title>
-<meta name="description" content="Claude Code 一日實作上線班：從 0 到有網址的真實作品。首梯 2026/06/14，限額 8 人。現場優惠碼可享折扣價。" />
+<title>一日實作上線班｜第二梯 6/28 — Claude Code 實戰課程</title>
+<meta name="description" content="Claude Code 一日實作上線班：從 0 到有網址的真實作品。第二梯 2026/06/28（日），限額 8 人。現場優惠碼可享折扣價。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -115,7 +115,7 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
 
 <header class="hero">
   <div class="wrap">
-    <div class="kicker">FULL-DAY SHIPPING CLASS · 首梯 6/14</div>
+    <div class="kicker">FULL-DAY SHIPPING CLASS · 第二梯 6/28</div>
     <h1>一日 <em>實作上線班</em><br/>下課時，你手上有一個<br/>真實上線的作品。</h1>
     <p class="lead">從一個想法，到一個有網址、可以傳 LINE 給朋友的真實作品——前端、資料庫、登入、API、雲端部署、自訂網域，一天走完整套。由連續創業者 Rai 手把手帶。</p>
 
@@ -137,7 +137,7 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
       <div class="now">NT$ <span id="nowPrice">6,800</span></div>
       <div class="save" id="saveTag" hidden></div>
       <div class="codeon" id="codeTag" hidden></div>
-      <div class="seatsline" id="seatsLine">🔥 首梯限額 8 人 · 僅剩 <strong id="seatsLeft2">—</strong> 位</div>
+      <div class="seatsline" id="seatsLine">🔥 第二梯限額 8 人 · 僅剩 <strong id="seatsLeft2">—</strong> 位</div>
     </div>
   </div>
 </header>
@@ -145,7 +145,7 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
 <section style="padding-top:14px">
   <div class="wrap">
     <div class="info">
-      <div class="row"><div class="k">梯次</div><div class="v">首梯 · 2026/06/14（日）<small>剩餘 <strong id="seatsLeft">—</strong> / 8 位</small></div></div>
+      <div class="row"><div class="k">梯次</div><div class="v">第二梯 · 2026/06/28（日）<small>剩餘 <strong id="seatsLeft">—</strong> / 8 位</small></div></div>
       <div class="row"><div class="k">時間</div><div class="v">08:30 – 17:00<small>午休 12:00 – 13:30</small></div></div>
       <div class="row"><div class="k">地點</div><div class="v">水行者風箏衝浪俱樂部<small>南方澳漁港內 · 內埤情人灣海景教室</small></div></div>
       <div class="row"><div class="k">名額</div><div class="v">限額 8 人<small>小班手把手實作</small></div></div>
@@ -165,7 +165,7 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
 <section style="padding-top:6px">
   <div class="wrap">
     <div class="formcard">
-      <h2 id="formTitle">立即報名 · 首梯 6/14</h2>
+      <h2 id="formTitle">立即報名 · 第二梯 6/28</h2>
       <div class="sub">填表後依金額匯款、到 LINE 回報末五碼即完成。</div>
 
       <form id="regForm" novalidate>
@@ -211,8 +211,8 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
   // ===== 設定 =====
   const SB_URL='https://nxjtndpfccmzbrvfxczw.supabase.co';
   const SB_KEY='sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
-  const SESSION='2026-06-14';
-  const OFFER_DEADLINE='2026-06-12T23:59:00+08:00';  // ★ 優惠截止 6/12 23:59
+  const SESSION='2026-06-28';
+  const OFFER_DEADLINE='2026-06-26T23:59:00+08:00';  // ★ 第二梯優惠截止 6/26 23:59（課前 2 天）
 
   const sb=window.supabase.createClient(SB_URL,SB_KEY);
   const $=id=>document.getElementById(id);
@@ -279,9 +279,9 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:12p
       if(!data.is_open||data.remaining<=0){
         $('seatsLeft').textContent='0'; if(s2) s2.textContent='0';
         $('seatsLine').classList.add('full');
-        $('seatsLine').innerHTML='⚠️ 首梯 8 位已額滿 · 可填表候補';
+        $('seatsLine').innerHTML='⚠️ 第二梯 8 位已額滿 · 可填表候補';
         const b=$('regSubmit'); b.textContent='名額已滿 · 填表候補 →';
-        setNote('首梯 8 位已額滿，仍可送出資料候補。','warn');
+        setNote('第二梯 8 位已額滿，仍可送出資料候補。','warn');
       }
     }catch(e){}
   }
