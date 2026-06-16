@@ -103,7 +103,7 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
       <label style="font-size:13px;color:var(--muted);white-space:nowrap;width:auto">梯次</label>
       <select id="halfSession" style="width:auto;min-width:260px">
-        <option value="2026-06-17" selected>第二梯 · 6/21（日）13:30–16:30</option>
+        <option value="2026-06-21" selected>第二梯 · 6/21（日）13:30–16:30</option>
         <option value="2026-06-07">首梯 · 6/07（日）13:30–16:30（已結束）</option>
       </select>
       <button class="ghostbtn" id="printHalf">🖨️ 列印 / 匯出 PDF</button>
@@ -152,8 +152,8 @@ td{color:var(--ink)}tr:last-child td{border-bottom:0}
   const SB_URL='https://nxjtndpfccmzbrvfxczw.supabase.co';
   const SB_KEY='sb_publishable_hYHUZpLWJXweFo8U1zugWg_0TfmE97D';
   const ONE='2026-06-14';
-  const HALF_LABELS={'2026-06-17':'第二梯 · 2026/06/21（日）13:30–16:30','2026-06-07':'首梯 · 2026/06/07（日）13:30–16:30'};
-  function halfSession(){const el=$('halfSession');return el?el.value:'2026-06-17';}
+  const HALF_LABELS={'2026-06-21':'第二梯 · 2026/06/21（日）13:30–16:30','2026-06-17':'第二梯 · 2026/06/21（日）13:30–16:30（舊連結）','2026-06-07':'首梯 · 2026/06/07（日）13:30–16:30'};
+  function halfSession(){const el=$('halfSession');return el?el.value:'2026-06-21';}
   function updateHalfNote(){const s=halfSession();const n=$('halfNote');if(n)n.textContent='半日展示班 · '+(HALF_LABELS[s]||s)+' · 保證金 NT$100';}
   const ONEDAY_URL='https://claude.waterman-sports.com/oneday.html';
   const LS='cc_admin_token';
